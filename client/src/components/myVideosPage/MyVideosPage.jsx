@@ -1,17 +1,17 @@
 import React from 'react'
-import List from './List'
 import Navbar from '../Navbar'
-import SideList from '../videoPage/SideList'
+import List from './List'
+import Edit from './Edit'
 
-const myVideos = () => {
+const MyVideosPage = () => {
   return (
     <div>
         <Navbar />
         <List />
-        <SideList />
+        <Edit />
       myVideos
     </div>
   )
 }
 
-export default myVideos
+export default MyVideosPage
