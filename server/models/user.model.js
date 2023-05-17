@@ -26,7 +26,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    myVideos: [String]
+    myVideos: [{
+        videoId:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'VideoModel'
+        }
+    }]
 })
 
 const UserModel = mongoose.model('Users', UserSchema)
