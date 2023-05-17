@@ -20,4 +20,5 @@ app.get('/', (req, res) => {
 mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => app.listen(PORT, () => {
         console.log(`Server running on port: ${PORT}`)
+        console.log('Connected to DataBase')
     })).catch(err => console.log(err.message))
