@@ -5,7 +5,6 @@ const JWT =require('jsonwebtoken')
 const registerController = async (req, res) => {
     try {
       const { name, email,profession,phone, password, confirmPassword } = req.body;
-      //validations
       if (!name) {
         return res.send({ error: "Name is Required" });
       }
@@ -31,22 +30,18 @@ const registerController = async (req, res) => {
         return res.send({ message: "password and confirmpassword should match" });
       }
     
-      //check user
       const exisitingUser = await userModel.findOne({ email });
-      //exisiting user
       if (exisitingUser) {
         return res.status(200).send({
           success: false,
           message: "Already Register please login",
         });
       }
-      //register userhashPassword
       const hashedPassword =  await bcrypt.hash(password, 10);
       const hashedConfirmPassword =  await bcrypt.hash(confirmPassword, 10);
 
           
        
-      //save
       const user = await new userModel({
         name,
         email,
@@ -74,14 +69,12 @@ const registerController = async (req, res) => {
 const loginController = async (req, res) => {
     try {
       const { email, password } = req.body;
-      //validation
       if (!email || !password) {
         return res.status(404).send({
           success: false,
           message: "Invalid email or password",
         });
       }
-      //check user
       const user = await userModel.findOne({ email });
       if (!user) {
         return res.status(404).send({
@@ -97,7 +90,6 @@ const loginController = async (req, res) => {
           message: "Invalid Password",
         });
       }
-      //token
       const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
       });
