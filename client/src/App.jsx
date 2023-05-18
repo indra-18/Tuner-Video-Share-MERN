@@ -1,9 +1,10 @@
-function App() {
+import React from 'react'
+import AppRouter from './router/appRouter'
 
+const App = () => {
   return (
     <>
-      <h1 className=" text-orange-600 ">hello world</h1>
-        
+      <AppRouter />
     </>
   )
 }
