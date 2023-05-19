@@ -5,16 +5,20 @@ const VideoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    video: {
+        type: String,
+        required: true
+    },
     date: {
         type: String,
         required: true
     },
     duration: {
-        type: String,
+        type: Number,
         required: true
     },
     views: {
-        type: String,
+        type: Number,
         required: true
     },
     description: {
