@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from '../components/homePage/Home'
 import Register from '../components/registerPage/Register'
@@ -6,8 +6,12 @@ import Login from '../components/loginPage/Login'
 import VideoPage from '../components/videoPage/VideoPage'
 import MyVideosPage from '../components/myVideosPage/MyVideosPage'
 import SearchedList from '../components/searchListPage/SearchedList'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const appRouter = () => {
+
+const AppRouter = () => {
+  
   return (
     <BrowserRouter>
         <Routes>
@@ -18,8 +22,9 @@ const appRouter = () => {
             <Route path='/searchlist' element={<SearchedList />}/>
             <Route path='/video' element={<VideoPage />}/>
         </Routes>
+        <ToastContainer theme="dark" />
     </BrowserRouter>
   )
 }
 
-export default appRouter
+export default AppRouter
