@@ -25,7 +25,6 @@ function getDate() {
 exports.upload = async (req, res) => {
     const { userId } = req.params;
     const formattedDate = getDate()
-    console.log(formattedDate)
     if (!userId) {
         return res.status(401).json({error: 'UserId not provided'})
     }
@@ -34,20 +33,22 @@ exports.upload = async (req, res) => {
         if (!user) {
             return res.status(401).json({error: 'User not found in Database'})
         }
-        console.log(req.body)
-        // const videoUrl = await cloudinary.uploader.upload(req.file.path);
-        // console.log(videoUrl)
-        // user.myVideos.unshift({videoId: videoUrl})
+        const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path,{
+            resource_type: "video",
+            folder: "tuner"
+        });
 
-        // const newVideo = new VideoModel({
-        //     ...req.body,
-        //     video: videoUrl,
-        //     date: formattedDate,
-        // })
-        // await newVideo.save();
+        const newVideo = new VideoModel({
+            ...req.body,
+            video: cloudinaryResponse.url,
+            date: formattedDate,
+        })
+        const savedVideo = await newVideo.save();
+        user.myVideos.unshift({url: newVideo._id})
 
-        // return res.status(201).json({result: newVideo})
+        return res.status(201).json({result: savedVideo})
     } catch (err) {
+        console.log(err.message)
         return res.status(500).json({error: err.message})
     }
 }
