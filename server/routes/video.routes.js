@@ -19,5 +19,6 @@ const storage = multer({
 
 router.post('/video/:userId', storage.single('video'), videoController.upload)
 router.get('/video/search', videoController.searchByTitle)
+router.get('/searchlist/video/:videoId', videoController.getById)
 
 module.exports = router;

@@ -61,6 +61,16 @@ exports.searchByTitle = async (req, res, next) => {
       }).limit(40);
       return res.status(200).json({result: videos});
     } catch (err) {
-      return reres.status(500).json({error: err.message})
+      return res.status(500).json({error: err.message})
     }
   };
+
+exports.getById = async (req, res) => {
+    const {videoId} = req.params
+    try {
+        const video = await VideoModel.findById(videoId);
+        return res.status(200).json({result: video})
+    } catch (err) {
+        return res.status(500).json({error: err.message})
+    }
+}
