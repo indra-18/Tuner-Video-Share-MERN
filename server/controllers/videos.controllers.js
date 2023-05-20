@@ -52,3 +52,15 @@ exports.upload = async (req, res) => {
         return res.status(500).json({error: err.message})
     }
 }
+
+exports.searchByTitle = async (req, res, next) => {
+    const query = req.query.q;
+    try {
+      const videos = await VideoModel.find({
+        title: { $regex: query, $options: "i" },
+      }).limit(40);
+      return res.status(200).json({result: videos});
+    } catch (err) {
+      return reres.status(500).json({error: err.message})
+    }
+  };
