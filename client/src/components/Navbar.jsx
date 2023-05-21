@@ -48,15 +48,15 @@ const Navbar = () => {
   {!auth?.user ? (<div className="invisible sm:visible">
     <div className="flex gap-3 mt-3">
       <NavLink to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">Login</NavLink>
-      <a href className="block px-3 py-2 rounded-md text-base font-medium text-gray-300">|</a>
+      <p className="block px-3 py-2 rounded-md text-base font-medium text-gray-300">|</p>
       <NavLink to="/register" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">Register</NavLink>
     </div>
   </div>) : (<div className="invisible sm:visible">
     <div className="flex gap-3 mt-3">
       <NavLink to="/myvideos" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">My Video</NavLink>
-      <a href className="block px-3 py-2 rounded-md text-base font-medium text-gray-300">|</a>
+      <p className="block px-3 py-2 rounded-md text-base font-medium text-gray-300">|</p>
       <NavLink to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">Upload</NavLink>
-      <a href className="block px-3 py-2 rounded-md text-base font-medium text-gray-300">|</a>
+      <p className="block px-3 py-2 rounded-md text-base font-medium text-gray-300">|</p>
       <NavLink to="/" onClick={handleLogout} className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">Sign out</NavLink>
     </div>
   </div>)}
