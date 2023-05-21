@@ -1,12 +1,17 @@
-import React ,{useState}from 'react'
-import { NavLink } from 'react-router-dom'
+import React ,{useContext, useState}from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contextApi/appContext';
 import { toast } from 'react-toastify';
+import { searchByTitle } from '../services/nodeApi';
+import { VideoContext } from '../contextApi/VideoContextApi';
 
 const Navbar = () => {
   const [toggle, setToggle]= useState(false);
   const [auth , setAuth] = useAuth();
   const notifyB = (msg) => toast.success(msg)
+  const { searchVideo } = useContext(VideoContext)
+  const [searchText, setSearchText] = useState('')
+  const navigate = useNavigate()
 
   const handleLogout = () => {
     setAuth({
@@ -17,6 +22,17 @@ const Navbar = () => {
     localStorage.removeItem("auth");
     notifyB("Logout Successfully");
   };
+
+  const search = async (searchText) => {
+    try {
+      const result = await searchByTitle(searchText);
+      searchVideo(result);
+      navigate('/searchlist')
+    } catch (err) {
+      console.log(err.message)
+    }
+  };
+
 
   return (
 <nav className=" bg-black">
@@ -31,7 +47,19 @@ const Navbar = () => {
       </div>
       <div className="flex">
         <div className="mt-2 ml-2 sm:ml-6 sm:flex sm:items-center text-white">
-          <input type="text" placeholder="Search" className="px-4 py-2 border-white rounded-full text-white w-60 ml-4 sm:w-96 bg-gray-700 sm:mt-0 mt-2 h-9" />
+          <input type="text" 
+          placeholder="Search" 
+          className="px-4 py-2 border-white rounded-full text-white w-60 ml-4 sm:w-96 bg-gray-700 sm:mt-0 mt-2 h-9" 
+          onChange={(e) => {
+            setSearchText(e.target.value)
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              search(searchText)
+            }
+          }}
+          value={searchText}
+          />
         </div>
       </div>
       <div className="ml-2 flex items-center sm:hidden">

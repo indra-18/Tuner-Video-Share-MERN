@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+import { useDropzone } from 'react-dropzone'
+import { toast } from "react-toastify";
+
 import { options } from "../constants/index";
 import { postVideo } from "../services/nodeApi";
+import { useAuth } from "../contextApi/appContext";
 import close from "../assets/close.svg";
 
 const Upload = () => {
   const [openDropdown, setOpenDropdown] = useState({});
+  const [auth] = useAuth()
   const [formData, setFormData] = useState({
     name: "",
     video: null,
@@ -14,6 +19,9 @@ const Upload = () => {
     duration: 10,
     views: 200,
   });
+
+  const successMessage = (message) => toast.success(message)
+  const errorMessage = (message) => toast.error(message)
   
   const [preview, setPreview] = useState(null);
   const [show, setShow] = useState(true);
@@ -43,12 +51,12 @@ const Upload = () => {
       views: 200,
     });
     setPreview(null);
-  };  
+  };
+  // console.log(auth.user)
 
   const submitForm = async (e) => {
     e.preventDefault();
-    const userId = "6464c8d097b9f87109c3c011";
-
+    const userId = "646875494cc6674c5782e9e6";
     const videoData = new FormData();
     videoData.append("title", formData.name);
     videoData.append("video", formData.video);
@@ -57,19 +65,37 @@ const Upload = () => {
     videoData.append("duration", formData.duration);
     videoData.append("views", formData.views);
     videoData.append("visibility", formData.visibility);
-
+    
     try {
       const response = await postVideo(userId, videoData);
+      successMessage("Video Saved Successfully")
       resetForm()
     } catch (error) {
-      console.error(error);
+      errorMessage(error.message)
     }
   };
+
+  const reader = new FileReader();
+  const onDrop = useCallback(acceptedFiles => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      video: acceptedFiles[0] || null,
+    }));
+    if (acceptedFiles) {
+      reader.onload = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(acceptedFiles[0]);
+    } else {
+      setPreview(null);
+    }
+  }, []);
+  const { getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
   return (
     <>
       {show && (
-        <form action="#" method="POST" onSubmit={submitForm}>
+        <form action="#" method="POST" onSubmit={submitForm} encType="multipart/form-data">
           <div className="flex justify-center">
             <div className="bg-[#000000] flex-1 rounded-[10px] max-w-2xl px-6 py-2 box-border">
               <div className="flex justify-between">
@@ -85,9 +111,8 @@ const Upload = () => {
                   />
                 </div>
               </div>
-              <label
-                htmlFor="dropzone-file"
-                dropzone="copy"
+              <div
+                {...getRootProps()}
                 className="min-h-[150px] flex flex-col justify-center items-center w-full mx-auto text-center bg-[#4B4B5F] border-2 border-[#707070] cursor-pointer rounded-[10px]"
               >
                 {preview ? (
@@ -123,20 +148,22 @@ const Upload = () => {
                   </>
                 )}
                 <input
-                  id="dropzone-file"
+                  {...getInputProps()}
                   type="file"
                   accept="video/*"
                   className="hidden"
                   name="video"
                   onChange={(e) => {
-                    const file = e.target.files && e.target.files[0];
+                    const selectedFile = e.target.files && e.target.files[0];
+                    if (!selectedFile && formData.video) {
+                      return;
+                    }
                     setFormData((prevFormData) => ({
                       ...prevFormData,
-                      video: file || null,
+                      video: selectedFile || null,
                     }));
 
                     if (file) {
-                      const reader = new FileReader();
                       reader.onload = () => {
                         setPreview(reader.result);
                       };
@@ -146,7 +173,7 @@ const Upload = () => {
                     }
                   }}
                 />
-              </label>
+              </div>
               <div className="flex justify-start text-center my-2">
                 <h2 className="text-lg font-bold text-white">Name</h2>
                 <input
@@ -164,7 +191,7 @@ const Upload = () => {
                 value={formData.description}
                 onChange={handleInputChange}
                 className="focus:outline-none bg-black min-w-full text-white h-16 placeholder:text-sm placeholder:text-gray-500"
-                placeholder="description"
+                placeholder="Description"
               />
               <hr className="text-[#707070]" />
               <div className="flex justify-around py-3">

@@ -8,3 +8,12 @@ export const postVideo = async (userId, videoData) => {
         return err.message
     }
 }
+
+export const searchByTitle = async (query) => {
+    try {
+        const response = await axios.get(`http://localhost:4943/video/search?q=${query}`)
+        return response.data.result
+    } catch (err) {
+        err.message
+    }
+}
