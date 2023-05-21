@@ -1,11 +1,18 @@
-import React from 'react'
+import React from "react";
+import MainVideo from "./MainVideo";
+import SideList from "./SideList";
+import Navbar from "../Navbar";
 
 const VideoPage = () => {
   return (
-    <div>
-      VideoPage
-    </div>
-  )
-}
+    <>
+      <Navbar />
+      <div className="flex">
+        <MainVideo />
+        <SideList />
+      </div>
+    </>
+  );
+};
 
-export default VideoPage
+export default VideoPage;
