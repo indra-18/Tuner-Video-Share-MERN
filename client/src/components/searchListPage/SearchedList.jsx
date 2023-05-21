@@ -23,9 +23,11 @@ const SearchedList = () => {
                 <img src={userIcon} className="absolute bottom-2 right-2 rounded-full max-h-6 max-w-6" />
                 <img src={playIcon} className="absolute top-2 right-2 rounded-full max-h-6 max-w-6" />
                 <div style={{ maxWidth: "50%", overflowWrap: "break-word", wordWrap: "break-word", wordBreak: "break-word" }} className=" absolute left-1 bottom-12 text-white font-bold text-justify text-xs mt-1">{card.title}</div>
-                <div className="absolute left-1 bottom-2 text-gray-200 text-xs mt-1">{card.date}</div>
-                <div className="absolute bottom-2 left-14 text-gray-200 text-xs px-1 py">{card.duration}</div>
-                <div className="absolute bottom-2 left-24 text-gray-200 text-xs mt-1">{card.views}</div>
+                <div className="absolute bottom-2 left-2 flex justify-start items-baseline">
+                <div className="ml-2 text-gray-200 text-xs mt-1">{card.date}</div>
+                <div className="ml-2 text-gray-200 text-xs px-1 py">{card.duration} Mins</div>
+                <div className="ml-2 text-gray-200 text-xs mt-1">{card.views} Views</div>
+                </div>
               </div>
             </Link>
           </li>
