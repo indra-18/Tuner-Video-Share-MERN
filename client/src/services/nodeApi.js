@@ -14,6 +14,15 @@ export const searchByTitle = async (query) => {
         const response = await axios.get(`http://localhost:4943/video/search?q=${query}`)
         return response.data.result
     } catch (err) {
-        err.message
+        return err.message
+    }
+}
+
+export const getById = async (videoId) => {
+    try {
+        const response = await axios.get(`http://localhost:4943/searchlist/video/${videoId}`)
+        return response.data.result
+    } catch (err) {
+        return err.message
     }
 }
