@@ -44,7 +44,8 @@ exports.upload = async (req, res) => {
             date: formattedDate,
         })
         const savedVideo = await newVideo.save();
-        user.myVideos.unshift({url: newVideo._id})
+        user.myVideos.unshift(savedVideo._id)
+        await user.save();
 
         return res.status(201).json({result: savedVideo})
     } catch (err) {
@@ -74,3 +75,71 @@ exports.getById = async (req, res) => {
         return res.status(500).json({error: err.message})
     }
 }
+
+exports.updateVideoDetails = async (req, res) => {
+    const { userId, videoId } = req.params;
+    const { title, description, category, visibility } = req.body;
+  
+    if (!userId) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  
+    try {
+      const user = await UserModel.findById(userId);
+      if (!user) {
+        return res.status(404).json({ error: 'User Not Found' });
+      }
+  
+      const videoIndex = user.myVideos.findIndex((id) => id === videoId);
+      if (videoIndex === -1) {
+        return res.status(404).json({ error: 'Video Not Found In MyVideos' });
+      }
+  
+      let video = await VideoModel.findById(videoId);
+      if (!video) {
+        return res.status(404).json({ error: 'Video Not Found' });
+      }
+  
+      video.title = title;
+      video.description = description;
+      video.category = category;
+      video.visibility = visibility;
+  
+      await video.save();
+  
+      return res.status(200).json({ result: 'Video Updated Successfully' });
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  };
+  
+
+exports.getAllVideos = async (req, res) => {
+    try {
+        const allVideos = await VideoModel.find();
+        return res.status(200).json({result: allVideos});
+    } catch (err) {
+        return res.status(500).json({error: err.message});
+    }
+}
+
+exports.deleteVideo = async (req, res) => {
+    const { userId, videoId } = req.params;
+    try {
+      const user = await UserModel.findById(userId);
+      if (!user) return res.status(404).json({ error: 'User not found' });
+      console.log(user.myVideos)
+      const videoIndex = user.myVideos.findIndex(id => id === videoId);
+      if (videoIndex === -1) return res.status(404).json({ error: 'Video not found in MyVideos' });
+  
+      user.myVideos.splice(videoIndex, 1);
+      await user.save();
+  
+      await VideoModel.findByIdAndDelete(videoId);
+  
+      return res.status(200).json({ result: 'Video deleted successfully' });
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  };
+  
