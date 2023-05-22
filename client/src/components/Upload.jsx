@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { useDropzone } from 'react-dropzone'
 import { toast } from "react-toastify";
 
@@ -6,10 +6,13 @@ import { options } from "../constants/index";
 import { postVideo } from "../services/nodeApi";
 import { useAuth } from "../contextApi/appContext";
 import close from "../assets/close.svg";
+import { VideoContext } from "../contextApi/VideoContextApi";
 
 const Upload = () => {
   const [openDropdown, setOpenDropdown] = useState({});
   const [auth] = useAuth()
+  const [preview, setPreview] = useState(null);
+
   const [formData, setFormData] = useState({
     name: "",
     video: null,
@@ -19,13 +22,11 @@ const Upload = () => {
     duration: 10,
     views: 200,
   });
+  const { showUpload, handleShowUpload } = useContext(VideoContext)
 
   const successMessage = (message) => toast.success(message)
   const errorMessage = (message) => toast.error(message)
   
-  const [preview, setPreview] = useState(null);
-  const [show, setShow] = useState(true);
-
   const handleInputChange = (e) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -52,11 +53,10 @@ const Upload = () => {
     });
     setPreview(null);
   };
-  // console.log(auth.user)
 
   const submitForm = async (e) => {
     e.preventDefault();
-    const userId = "646875494cc6674c5782e9e6";
+    const userId = auth.user._id;
     const videoData = new FormData();
     videoData.append("title", formData.name);
     videoData.append("video", formData.video);
@@ -94,8 +94,11 @@ const Upload = () => {
 
   return (
     <>
-      {show && (
-        <form action="#" method="POST" onSubmit={submitForm} encType="multipart/form-data">
+      {showUpload && (
+        <form action="#" method="POST" 
+        onSubmit={submitForm} encType="multipart/form-data"
+        className="absolute z-50 top-0 inset-0"
+        >
           <div className="flex justify-center">
             <div className="bg-[#000000] flex-1 rounded-[10px] max-w-2xl px-6 py-2 box-border">
               <div className="flex justify-between">
@@ -107,7 +110,10 @@ const Upload = () => {
                     src={close}
                     alt="close icon"
                     className="hover:bg-red-600"
-                    onClick={() => setShow((prev) => !prev)}
+                    onClick={() => {
+                      handleShowUpload(false)
+                      resetForm()
+                    }}
                   />
                 </div>
               </div>
