@@ -18,7 +18,7 @@ const SearchedList = () => {
             <li key={card._id} className="flex items-center">
               <Link to={`/searchlist/video/${card._id}`}>
                 <div className="relative w-full h-40">
-                  <video className="w-full h-full object-cover rounded">
+                  <video className="w-full h-full object-cover rounded hover:border-[#C4B4F8] hover:border-4">
                     <source src={card.video} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>

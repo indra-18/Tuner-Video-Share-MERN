@@ -22,6 +22,11 @@ const Upload = () => {
     duration: 10,
     views: 200,
   });
+  const [dropdownValues, setDropdownValues] = useState({
+    Category: "",
+    Visibility: "",
+  });
+
   const { showUpload, handleShowUpload } = useContext(VideoContext)
 
   const successMessage = (message) => toast.success(message)
@@ -39,6 +44,13 @@ const Upload = () => {
       ...prevState,
       [title]: !prevState[title],
     }));
+  };
+  const handleDropdownSelection = (option, item) => {
+    setDropdownValues((prevValues) => ({
+      ...prevValues,
+      [option]: item,
+    }));
+    toggleDropdown(option);
   };
 
   const resetForm = () => {
@@ -109,7 +121,7 @@ const Upload = () => {
                   <img
                     src={close}
                     alt="close icon"
-                    className="hover:bg-red-600"
+                    className="hover:bg-red-600 rounded-lg py-2 px-4"
                     onClick={() => {
                       handleShowUpload(false)
                       resetForm()
@@ -203,14 +215,15 @@ const Upload = () => {
               <div className="flex justify-around py-3">
                 {options.map((option) => (
                   <div key={option.title}>
+                    <p className=" text-xs text-gray-500 pl-6">{option.title}</p>
                     <button
                       id="dropdownDefaultButton"
                       data-dropdown-toggle="dropdown"
-                      className="text-white focus:outline-none font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+                      className="text-white focus:outline-none font-medium rounded-lg text-sm px-4 pb-2.5 pt-1 text-center inline-flex items-center"
                       type="button"
                       onClick={() => toggleDropdown(option.title)}
                     >
-                      {option.title}
+                      {dropdownValues[option.title] || option.title}
                       <svg
                         className="w-4 h-4 ml-2"
                         aria-hidden="true"
@@ -230,7 +243,7 @@ const Upload = () => {
                     {openDropdown[option.title] && option.list && (
                       <div
                         id="dropdown"
-                        className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+                        className="z-50 absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
                       >
                         <ul
                           className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -241,12 +254,12 @@ const Upload = () => {
                               <p
                                 className="block px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                 onClick={() => {
+                                  handleDropdownSelection(option.title, item)
                                   setFormData((prevFormData) =>
                                     option.title === "Category"
                                       ? { ...prevFormData, category: item }
                                       : { ...prevFormData, visibility: item }
                                   );
-                                  toggleDropdown(option.title)
                                 }}
                               >
                                 {item}
@@ -263,7 +276,7 @@ const Upload = () => {
               <div className="flex justify-center mt-3">
                 <button
                   type="submit"
-                  className="text-white font-bold py-3 px-20 bg-[#C4B4F8] rounded-[28px]"
+                  className="text-white hover:bg-violet-500 font-bold py-3 px-20 bg-[#C4B4F8] rounded-[28px]"
                 >
                   Save
                 </button>
