@@ -52,11 +52,10 @@ const Upload = () => {
     });
     setPreview(null);
   };
-  // console.log(auth.user)
 
   const submitForm = async (e) => {
     e.preventDefault();
-    const userId = "646875494cc6674c5782e9e6";
+    const userId = "";
     const videoData = new FormData();
     videoData.append("title", formData.name);
     videoData.append("video", formData.video);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './VideoPlayer.css'
 import axios from 'axios';
 import { useParams } from 'react-router-dom'
+import Navbar from '../Navbar'
 
 const VideoPlayer = () => {
     const [data, setData] = useState([]);
@@ -19,7 +20,10 @@ const VideoPlayer = () => {
     return (
       <>
            <div className='main'>
-                <div className='left'>
+           <div className='Nav'>
+           <Navbar />
+           </div>
+          <div className='contain'>
                     <video src={data.video} style={{ width: "100%", height: "85%" }} controls />
                     <div className='info'>
                         <h1>{data.tittle}</h1>
