@@ -70,7 +70,7 @@ exports.getById = async (req, res) => {
     const {videoId} = req.params
     try {
         const video = await VideoModel.findById(videoId);
-        return res.status(200).json({result: video})
+        return res.status(200).json(video)
     } catch (err) {
         return res.status(500).json({error: err.message})
     }
@@ -117,7 +117,7 @@ exports.updateVideoDetails = async (req, res) => {
 exports.getAllVideos = async (req, res) => {
     try {
         const allVideos = await VideoModel.find();
-        return res.status(200).json({result: allVideos});
+        return res.status(200).json(allVideos);
     } catch (err) {
         return res.status(500).json({error: err.message});
     }

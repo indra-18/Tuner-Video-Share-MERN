@@ -9,7 +9,7 @@ import close from "../assets/close.svg";
 
 const Upload = () => {
   const [openDropdown, setOpenDropdown] = useState({});
-  const [auth] = useAuth()
+  const [auth,useAuth] = useAuth()
   const [formData, setFormData] = useState({
     name: "",
     video: null,

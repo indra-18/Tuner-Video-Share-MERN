@@ -8,6 +8,7 @@ import MyVideosPage from '../components/myVideosPage/MyVideosPage'
 import SearchedList from '../components/searchListPage/SearchedList'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import VideoPlayer from "../components/homePage/VideoPlayer";
 
 const AppRouter = () => {
   return (
@@ -19,6 +20,7 @@ const AppRouter = () => {
         <Route path='/myvideos' element={<MyVideosPage />} />
         <Route path='/searchlist' element={<SearchedList />} />
         <Route path='/searchlist/video/:videoId' element={<VideoPage />} />
+        <Route path='/home/video/:videoId' element={<VideoPlayer/>} />
       </Routes>
       <ToastContainer theme="dark" />
     </BrowserRouter>
