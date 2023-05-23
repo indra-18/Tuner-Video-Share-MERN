@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../Navbar'
 import List from './List'
 import Edit from './Edit'
+import Upload from '../Upload'
 
 const MyVideosPage = () => {
+  const [selectedVideo, setSelectedVideo] = useState('');
+  const handleSelectedVideo = (videoId) => {
+    setSelectedVideo(videoId)
+  }
   return (
     <div>
-        <Navbar />
-        <List />
-        <Edit />
-      myVideos
+      <Navbar />
+      <div className='flex relative'>
+        <List handleSelectedVideo={handleSelectedVideo} />
+        <Edit selectedVideo={selectedVideo}/>
+        <Upload />
+      </div>
     </div>
   )
 }

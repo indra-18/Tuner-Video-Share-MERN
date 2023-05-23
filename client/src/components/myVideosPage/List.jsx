@@ -5,7 +5,7 @@ import "./List.css"
 import playIcon from "../../assets/playIcon.png";
 import axios from "axios";
 
-const List = () => {
+const List = ({handleSelectedVideo}) => {
   const [myvideo, setMyvideo] = useState([]);
   const [auth, setAuth] = useAuth();
   useEffect(() => {
@@ -21,18 +21,18 @@ const List = () => {
   console.log(myvideo)
 
 return (
-   <>
+   <div className="w-1/2">
      {myvideo.map((myvideo)=>{
-       <div className='card' >
-        <video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" controls/>
+       <div className='card'>
+        <video src={myvideo.video} controls/>
         <div className='btn'>
           <img src={playIcon} alt='img not' />
         </div>
-        <h3>title</h3>
+        <h3>{myvideo.video}</h3>
         
       </div>
     })}
-    </>
+    </div>
   )
 }
 export default List

@@ -8,8 +8,9 @@ import { VideoContext } from '../contextApi/VideoContextApi';
 const Navbar = () => {
   const [toggle, setToggle]= useState(false);
   const [auth , setAuth] = useAuth();
+  const notifyA = (msg) => toast.error(msg)
   const notifyB = (msg) => toast.success(msg)
-  const { searchVideo } = useContext(VideoContext)
+  const { searchVideo, handleShowUpload } = useContext(VideoContext)
   const [searchText, setSearchText] = useState('')
   const navigate = useNavigate()
 
@@ -26,6 +27,7 @@ const Navbar = () => {
   const search = async (searchText) => {
     try {
       const result = await searchByTitle(searchText);
+      if (result.length === 0) return notifyA('Search Results Not Found')
       searchVideo(result);
       navigate('/searchlist')
     } catch (err) {
@@ -83,7 +85,9 @@ const Navbar = () => {
     <div className="flex gap-3 mt-3">
       <NavLink to="/myvideos" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">My Video</NavLink>
       <p className="block px-3 py-2 rounded-md text-base font-medium text-gray-300">|</p>
-      <NavLink to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">Upload</NavLink>
+      <NavLink to="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white"
+      onClick={() => handleShowUpload(true)}
+      >Upload</NavLink>
       <p className="block px-3 py-2 rounded-md text-base font-medium text-gray-300">|</p>
       <NavLink to="/" onClick={handleLogout} className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">Sign out</NavLink>
     </div>
@@ -99,7 +103,9 @@ const Navbar = () => {
 {toggle && auth?.user && <div className="sm:hidden" id="mobile-menu">
   <div className="px-2 pt-2 pb-3 space-y-1">
       <NavLink to="/myvideos" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">My Video</NavLink>
-      <NavLink to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">Upload</NavLink>
+      <NavLink to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white"
+      onClick={() => handleShowUpload(true)}
+      >Upload</NavLink>
       <NavLink to="/" onClick={handleLogout} className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">Sign out</NavLink>
    </div>
 </div>}
