@@ -30,7 +30,7 @@ const AppRouter = () => {
         <Route
           path="/register"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazyRegister />
             </Suspense>
           }
@@ -38,7 +38,7 @@ const AppRouter = () => {
         <Route
           path="/myvideos"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazyMyVideosPage />
             </Suspense>
           }
@@ -46,7 +46,7 @@ const AppRouter = () => {
         <Route
           path="/searchlist"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazySearchedList />
             </Suspense>
           }
@@ -54,7 +54,7 @@ const AppRouter = () => {
         <Route
           path="/searchlist/video/:videoId"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazyVideoPage />
             </Suspense>
           }
@@ -62,7 +62,7 @@ const AppRouter = () => {
         <Route
           path="*"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazyPageNotFound />
             </Suspense>
           }
@@ -70,7 +70,7 @@ const AppRouter = () => {
         <Route
           path="/login"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazyLogin />
             </Suspense>
           }
@@ -78,7 +78,7 @@ const AppRouter = () => {
         <Route
           path="/home/video/:videoId"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazyVideoPage />
             </Suspense>
           }
