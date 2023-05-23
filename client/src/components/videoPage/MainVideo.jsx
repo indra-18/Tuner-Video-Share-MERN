@@ -20,7 +20,7 @@ const MainVideo = () => {
   }, [videoId])
 
   return (
-    <div className='w-2/3 bg-[#0F121FF5]'>
+    <div className='w-2/3 bg-[#0F121FF5] max-sm:w-full'>
       <div className=' mt-12 ml-12'>
         <div className=' w-full h-auto rounded-lg'>
           <video src={video.video} controls autoPlay className=' rounded-lg w-full h-full' />
