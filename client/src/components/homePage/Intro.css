@@ -1,0 +1,119 @@
+body {
+  background-color: rgb(21, 21, 37);
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+.banner {
+  height: 55vh;
+  width: 100%;
+}
+.banner:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  box-shadow: 1px 1px 2px black;
+}
+
+.banner > img {
+ 
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  margin:auto
+
+}
+img:hover {
+  opacity: 0.6;
+
+  box-shadow: 3px 1px 5px white;
+}
+.banner > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin: auto;
+  margin-bottom: 0%;
+}
+.video-content {
+  height: 40vh;
+  width: 100%;
+  display: flex;
+
+  flex-direction: column;
+}
+.btns {
+  height: 10vh;
+  display: flex;
+
+  justify-content: space-between;
+
+  margin: 2vh;
+}
+.recent {
+  margin-top: 1vh;
+  margin-left: 1vh;
+  font-size: 18px;
+  color: rgb(253, 253, 252);
+}
+
+.view-all {
+  margin-top: 1vh;
+  margin-right: 1vh;
+  cursor: pointer;
+}
+.view-all:hover {
+  color: rgb(10, 243, 22);
+}
+.bannerclass {
+  height: 25vh;
+  width: 100%;
+  cursor: pointer;
+  background-color: black;
+}
+.bannerclass > video {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  object-fit: fill;
+
+}
+.bannerclass > img{
+
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    margin:auto
+
+}
+.details {
+  margin-top: 1.8%;
+  position: absolute;
+  top: 10vh;
+  margin-left: 2%;
+  width: 30%;
+}
+.details h1 {
+  font-size: 40px;
+}
+.span span {
+  margin: 2%;
+  color: white;
+}
+.title {
+  width: 100%;
+  height: 18vh;
+  text-align: center;
+  position: absolute;
+  top: 40vh;
+}
+.title h1 {
+  color: rgb(191, 22, 22);
+  font-size: 45px;
+}
+.videos {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 3vh;
+}

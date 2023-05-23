@@ -12,7 +12,7 @@ const MyVideosPage = () => {
   return (
     <div>
       <Navbar />
-      <div className='flex relative'>
+      <div className='flex relative max-sm:flex-col'>
         <List handleSelectedVideo={handleSelectedVideo} />
         <Edit selectedVideo={selectedVideo}/>
         <Upload />

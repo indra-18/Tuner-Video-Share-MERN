@@ -9,7 +9,7 @@ const Edit = ({selectedVideo}) => {
   const [video, setVideo] = useState({});
   const [auth] = useAuth();
   const userId = auth.user._id;
-  const videoId = selectedVideo || "646b1db517abda001ef9a533";
+  const videoId = selectedVideo || auth.user.myVideos[0];
   const successMessage = (message) => toast.success(message);
   const errorMessage = (message) => toast.error(message);
 

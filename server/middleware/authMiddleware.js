@@ -1,7 +1,7 @@
 const JWT = require('jsonwebtoken')
 
 
-export const requireSignIn = async (req, res, next) => {
+module.exports = async (req, res, next) => {
     try {
         const decode = JWT.verify(
             req.headers.authorization,

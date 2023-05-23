@@ -5,6 +5,7 @@ export const VideoContext = createContext(null)
 const VideoContextProvider = ({children}) => {
     const [searchResults, setSearchResults] = useState([]);
     const [showUpload, setShowUpload] = useState(false);
+    const [allVideos, setAllVideos] = useState([])
 
 
     return <VideoContext.Provider value={{
@@ -15,8 +16,11 @@ const VideoContextProvider = ({children}) => {
         showUpload,
         handleShowUpload: (command) => {
             setShowUpload(command)
+        },
+        allVideos,
+        handleSetAllVideos: (videos) => {
+            setAllVideos(videos)
         }
-
     }}>
         {children}
     </VideoContext.Provider>

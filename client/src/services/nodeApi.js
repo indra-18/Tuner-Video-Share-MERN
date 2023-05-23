@@ -45,3 +45,12 @@ export const deleteVideo = async (userId, videoId) => {
         return err.message
     }
 }
+
+export const getAllVideos = async () => {
+    try {
+        const response = await axios.get(`http://localhost:4943/video`)
+        return response.data
+    } catch (err) {
+        return err.message
+    }
+}

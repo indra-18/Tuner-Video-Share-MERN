@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-
+// const USER = require('./user.model')
+const { ObjectId } = mongoose.Schema.Types
 const VideoSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -32,6 +33,10 @@ const VideoSchema = new mongoose.Schema({
     visibility: {
         type: String,
         required: true
+    },
+    postedBy: {
+        type: ObjectId,
+        ref: "USER"
     }
 })
 
