@@ -202,7 +202,7 @@ const Upload = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <hr className="bg-500" />
+              <hr className=" mx-1 border-gray-700" />
               <textarea
                 type="text"
                 name="description"
@@ -211,7 +211,7 @@ const Upload = () => {
                 className="focus:outline-none bg-black min-w-full text-white h-16 placeholder:text-sm placeholder:text-gray-500"
                 placeholder="Description"
               />
-              <hr className="text-[#707070]" />
+              <hr className=" mx-1 border-gray-700" />
               <div className="flex justify-around py-3">
                 {options.map((option) => (
                   <div key={option.title}>
@@ -272,7 +272,7 @@ const Upload = () => {
                   </div>
                 ))}
               </div>
-              <hr className="text-gray-600 bg-transparent" />
+              <hr className=" mx-1 border-gray-700" />
               <div className="flex justify-center mt-3">
                 <button
                   type="submit"

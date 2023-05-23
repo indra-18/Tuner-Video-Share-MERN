@@ -9,7 +9,7 @@ const Edit = ({selectedVideo}) => {
   const [video, setVideo] = useState({});
   const [auth] = useAuth();
   const userId = auth.user._id;
-  const videoId = selectedVideo || "64673d9d2d2f12a1f7137626";
+  const videoId = selectedVideo || "646b1db517abda001ef9a533";
   const successMessage = (message) => toast.success(message);
   const errorMessage = (message) => toast.error(message);
 
@@ -130,7 +130,7 @@ const Edit = ({selectedVideo}) => {
             </div>
           </div>
         </div>
-        <hr />
+        <hr className=" mx-2 border-gray-700" />
         <div className=" py-1 px-2">
           <p className="text-white py-1">Description</p>
           <textarea
@@ -142,7 +142,7 @@ const Edit = ({selectedVideo}) => {
             placeholder="Description"
           />
         </div>
-        <hr />
+        <hr className=" mx-2 border-gray-700" />
         <div className="flex justify-around py-3">
           {options.map((option) => (
             <div key={option.title}>
@@ -198,7 +198,7 @@ const Edit = ({selectedVideo}) => {
             </div>
           ))}
         </div>
-        <hr />
+        <hr className=" mx-2 border-gray-700" />
         <div className=" mt-10 mb-3 h-fit flex justify-between">
           <button
             className=" mx-4 mt-6 hover:bg-red-800 text-white font-bold py-2 px-12 bg-red-500 rounded-[28px]"
