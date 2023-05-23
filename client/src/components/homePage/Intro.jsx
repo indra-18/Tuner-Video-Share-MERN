@@ -15,7 +15,7 @@ const Content = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4943/video")
+      .get(`${import.meta.env.VITE_NODE_API}video`)
       .then((res) => {
         setData(res.data);
         setVideoData(res.data);
