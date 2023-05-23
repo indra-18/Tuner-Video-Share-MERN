@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { useDropzone } from 'react-dropzone'
 import { toast } from "react-toastify";
 
@@ -6,10 +6,13 @@ import { options } from "../constants/index";
 import { postVideo } from "../services/nodeApi";
 import { useAuth } from "../contextApi/appContext";
 import close from "../assets/close.svg";
+import { VideoContext } from "../contextApi/VideoContextApi";
 
 const Upload = () => {
   const [openDropdown, setOpenDropdown] = useState({});
   const [auth] = useAuth()
+  const [preview, setPreview] = useState(null);
+
   const [formData, setFormData] = useState({
     name: "",
     video: null,
@@ -19,13 +22,16 @@ const Upload = () => {
     duration: 10,
     views: 200,
   });
+  const [dropdownValues, setDropdownValues] = useState({
+    Category: "",
+    Visibility: "",
+  });
+
+  const { showUpload, handleShowUpload } = useContext(VideoContext)
 
   const successMessage = (message) => toast.success(message)
   const errorMessage = (message) => toast.error(message)
   
-  const [preview, setPreview] = useState(null);
-  const [show, setShow] = useState(true);
-
   const handleInputChange = (e) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -38,6 +44,13 @@ const Upload = () => {
       ...prevState,
       [title]: !prevState[title],
     }));
+  };
+  const handleDropdownSelection = (option, item) => {
+    setDropdownValues((prevValues) => ({
+      ...prevValues,
+      [option]: item,
+    }));
+    toggleDropdown(option);
   };
 
   const resetForm = () => {
@@ -52,11 +65,10 @@ const Upload = () => {
     });
     setPreview(null);
   };
-  // console.log(auth.user)
 
   const submitForm = async (e) => {
     e.preventDefault();
-    const userId = "646875494cc6674c5782e9e6";
+    const userId = auth.user._id;
     const videoData = new FormData();
     videoData.append("title", formData.name);
     videoData.append("video", formData.video);
@@ -94,8 +106,11 @@ const Upload = () => {
 
   return (
     <>
-      {show && (
-        <form action="#" method="POST" onSubmit={submitForm} encType="multipart/form-data">
+      {showUpload && (
+        <form action="#" method="POST" 
+        onSubmit={submitForm} encType="multipart/form-data"
+        className="absolute z-50 top-0 inset-0"
+        >
           <div className="flex justify-center">
             <div className="bg-[#000000] flex-1 rounded-[10px] max-w-2xl px-6 py-2 box-border">
               <div className="flex justify-between">
@@ -106,8 +121,11 @@ const Upload = () => {
                   <img
                     src={close}
                     alt="close icon"
-                    className="hover:bg-red-600"
-                    onClick={() => setShow((prev) => !prev)}
+                    className="hover:bg-red-600 rounded-lg py-2 px-4"
+                    onClick={() => {
+                      handleShowUpload(false)
+                      resetForm()
+                    }}
                   />
                 </div>
               </div>
@@ -184,7 +202,7 @@ const Upload = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <hr className="bg-500" />
+              <hr className=" mx-1 border-gray-700" />
               <textarea
                 type="text"
                 name="description"
@@ -193,18 +211,19 @@ const Upload = () => {
                 className="focus:outline-none bg-black min-w-full text-white h-16 placeholder:text-sm placeholder:text-gray-500"
                 placeholder="Description"
               />
-              <hr className="text-[#707070]" />
+              <hr className=" mx-1 border-gray-700" />
               <div className="flex justify-around py-3">
                 {options.map((option) => (
                   <div key={option.title}>
+                    <p className=" text-xs text-gray-500 pl-6">{option.title}</p>
                     <button
                       id="dropdownDefaultButton"
                       data-dropdown-toggle="dropdown"
-                      className="text-white focus:outline-none font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+                      className="text-white focus:outline-none font-medium rounded-lg text-sm px-4 pb-2.5 pt-1 text-center inline-flex items-center"
                       type="button"
                       onClick={() => toggleDropdown(option.title)}
                     >
-                      {option.title}
+                      {dropdownValues[option.title] || option.title}
                       <svg
                         className="w-4 h-4 ml-2"
                         aria-hidden="true"
@@ -224,7 +243,7 @@ const Upload = () => {
                     {openDropdown[option.title] && option.list && (
                       <div
                         id="dropdown"
-                        className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+                        className="z-50 absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
                       >
                         <ul
                           className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -235,12 +254,12 @@ const Upload = () => {
                               <p
                                 className="block px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                 onClick={() => {
+                                  handleDropdownSelection(option.title, item)
                                   setFormData((prevFormData) =>
                                     option.title === "Category"
                                       ? { ...prevFormData, category: item }
                                       : { ...prevFormData, visibility: item }
                                   );
-                                  toggleDropdown(option.title)
                                 }}
                               >
                                 {item}
@@ -253,11 +272,11 @@ const Upload = () => {
                   </div>
                 ))}
               </div>
-              <hr className="text-gray-600 bg-transparent" />
+              <hr className=" mx-1 border-gray-700" />
               <div className="flex justify-center mt-3">
                 <button
                   type="submit"
-                  className="text-white font-bold py-3 px-20 bg-[#C4B4F8] rounded-[28px]"
+                  className="text-white hover:bg-violet-500 font-bold py-3 px-20 bg-[#C4B4F8] rounded-[28px]"
                 >
                   Save
                 </button>

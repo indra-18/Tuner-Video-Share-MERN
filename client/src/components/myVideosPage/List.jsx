@@ -2,7 +2,7 @@ import React from 'react'
 
 const List = () => {
   return (
-    <div>
+    <div className='w-1/2'>
       List
     </div>
   )
