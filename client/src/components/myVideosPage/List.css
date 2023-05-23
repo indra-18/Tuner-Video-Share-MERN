@@ -1,0 +1,54 @@
+.card{
+    height: 23vh;
+    width: 20vw;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    opacity: 1;
+    border-radius: 3%;
+    /* box-shadow: 4px 5px 1px #3a4954; */
+    aspect-ratio: 16/9;
+}
+
+.card video{
+    width: 100%;
+    height: 100%;
+    border-radius: 5%;
+    z-index: -1;
+    cursor: pointer;
+   
+}
+.card:hover{
+    transform: scale(1.1);
+}
+
+.btn{
+    position: absolute;
+    top: 2vh;
+    border: none;
+    right: 3vh;
+    box-shadow: none;
+    font-size: 20px;
+    color: red;
+}
+
+.btn img{
+    width: 30px;
+    height: 30px;
+    z-index: -1;
+    border:none;
+ 
+}
+.btn img:hover{
+    width: 40px;
+    height: 35px;
+    z-index: -1;
+    
+    box-shadow: none;
+    border: none;
+}
+.card h3{
+    position: absolute;
+    top: 15vh;
+    left:2vh
+}
