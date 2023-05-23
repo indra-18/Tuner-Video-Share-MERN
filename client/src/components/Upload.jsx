@@ -4,13 +4,11 @@ import { toast } from "react-toastify";
 
 import { options } from "../constants/index";
 import { postVideo } from "../services/nodeApi";
-import { useAuth } from "../contextApi/appContext";
 import close from "../assets/close.svg";
 import { VideoContext } from "../contextApi/VideoContextApi";
 
 const Upload = () => {
   const [openDropdown, setOpenDropdown] = useState({});
-  const [auth,useAuth] = useAuth()
   const [preview, setPreview] = useState(null);
 
   const [formData, setFormData] = useState({

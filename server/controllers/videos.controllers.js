@@ -71,7 +71,7 @@ exports.getById = async (req, res) => {
   const { videoId } = req.params
   try {
     const video = await VideoModel.findById(videoId);
-    return res.status(200).json(video)
+    return res.status(200).json({result:video})
   } catch (err) {
     return res.status(500).json({ error: err.message })
   }

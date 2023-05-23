@@ -1,39 +1,29 @@
-import React, { useState, useEffect } from 'react'
-import './VideoPlayer.css'
-import axios from 'axios';
-import { useParams } from 'react-router-dom'
-import Navbar from '../Navbar'
+// import React from 'react'
+import "./Videoplayer.css"
 
-const VideoPlayer = () => {
-    const [data, setData] = useState([]);
-    const { videoId } = useParams();
-
-    useEffect(() => {
-        axios.get(`http://localhost:4943/home/video/${videoId}`)
-            .then((res) => {
-                setData(res.data)
-            }).catch((err) => {
-                window.alert("Vidoes are unavailable to load")
-            })
-
-    }, []);
-    return (
-      <>
-           <div className='main'>
-           <div className='Nav'>
-           <Navbar />
-           </div>
-          <div className='contain'>
-                    <video src={data.video} style={{ width: "100%", height: "85%" }} controls />
-                    <div className='info'>
-                        <h1>{data.tittle}</h1>
-                        <h4>{data.description}</h4>
+function Videoplayer({setToggle,data, videoData}) {
+  return (
+    <div className='main'>
+        <div className='close-icon'>
+            <img onClick={()=>{setToggle(false)}} src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/High-contrast-dialog-close.svg/768px-High-contrast-dialog-close.svg.png" alt='Not found'/>
+        </div>
+        <div className='left'>
+            <video src={data.video} style={{width:"100%",height:"85%"}} controls/>
+            <div className='info'>
+                <h1>{data.tittle}</h1>
+                <h4>{data.desc}</h4>
+            </div>
+        </div>
+        <div className='right'>
+                {videoData.slice(0,3).map((data1) => {
+                   return <div className='releted-content'>
+                    <video src={data1.video} style={{width:"100%",height:"100%"}} />
+                    <h3>{data1.tittle}</h3>
                     </div>
-                </div>
-                </div>
-          </>
-          )
-
+                })}
+        </div>
+    </div>
+  )
 }
 
-export default VideoPlayer
+export default Videoplayer
