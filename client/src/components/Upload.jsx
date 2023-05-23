@@ -82,6 +82,10 @@ const Upload = () => {
       const response = await postVideo(userId, videoData);
       successMessage("Video Saved Successfully")
       resetForm()
+      setDropdownValues({
+        Category: "",
+        Visibility: "",
+      });
     } catch (error) {
       errorMessage(error.message)
     }
