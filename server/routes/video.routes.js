@@ -1,5 +1,6 @@
 require('dotenv').config()
 const router = require('express').Router();
+const requireSignIn = require('../middleware/authMiddleware');
 const videoController = require('../controllers/videos.controllers');
 const multer = require('multer');
 
@@ -23,6 +24,7 @@ router.get('/searchlist/video/:videoId', videoController.getById);
 router.get('/home/video/:videoId', videoController.getById);
 router.get('/video', videoController.getAllVideos);
 router.put('/video/:userId/:videoId', videoController.updateVideoDetails)
-router.delete('/video/:userId/:videoId', videoController.deleteVideo)
+router.delete('/video/:userId/:videoId',requireSignIn,videoController.deleteVideo)
+router.get('/myVideo',requireSignIn,videoController.getMyVideos)
 
 module.exports = router;

@@ -10,7 +10,7 @@ import { VideoContext } from "../contextApi/VideoContextApi";
 
 const Upload = () => {
   const [openDropdown, setOpenDropdown] = useState({});
-  const [auth] = useAuth()
+  const [auth,useAuth] = useAuth()
   const [preview, setPreview] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -65,6 +65,7 @@ const Upload = () => {
     });
     setPreview(null);
   };
+  // console.log(auth.user)
 
   const submitForm = async (e) => {
     e.preventDefault();

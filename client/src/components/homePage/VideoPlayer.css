@@ -1,0 +1,63 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.main{
+    top: 0px;
+    bottom: 0px;
+    height: 100vh;
+    width: 100vw;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    row-gap: 0;
+    background-color:rgb(14, 14, 35);
+}
+
+.Nav{
+    display: block;
+    width: 100% !important;
+    margin-bottom: 0;
+    padding-bottom: 0%;
+}
+ .contain{
+    width: 100%;
+    height: 90%;
+    margin: auto;
+    margin-bottom: 0%;
+    padding-top: 0%;
+} 
+.contain > video{
+    width: 100%;
+    height: 100%;
+    margin-top: 0%;
+    padding-top: 0%;
+    object-fit: cover;
+    margin-bottom: 0%;
+}
+
+ .info{
+    margin: 0%;
+    padding: 3%;
+    padding-left: 0%;
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    color: white;
+    height: 17%;
+    row-gap: 0;
+    
+}
+.info h4{
+    margin-top: -1%;
+    margin-left: 3%;
+} 
+.info h1{
+    color: red;
+}
+
+@media (max-width:415px){
+    .card{
+        width: 40%;
+    }
+}
