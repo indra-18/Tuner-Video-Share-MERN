@@ -36,19 +36,22 @@ const Content = () => {
     return (<>
         <div className={`banner${banner}`} id="height">
           
-            {!toggle?
-            <img src="https://s1.dmcdn.net/v/QQG701T4FrD60Fc9W/x1080" onClick={()=>setToggle(true)} className="img1" alt=""/> :
-             <video src={data.slice(0,1).map((data,key)=>{return data.video})} onClick={()=>setToggle(false)} controls autoPlay/>
-            }
-
+            {!toggle?<>
+            <img src="https://s1.dmcdn.net/v/QQG701T4FrD60Fc9W/x1080" onClick={()=>setToggle(true)} className="img1" alt=""/> 
             <div className="details">
                 <h1>{data.slice(0,1).map((data,key)=>{return data.title})}</h1>
                 <div className="span">
-                    <span>21 May 2023</span>
-                    <span>Last 1 hour</span>
-                    <span>186k Views</span>
+                    <span>21 May 2023 </span>
+                    <span>Last 1 hour </span>
+                    <span>186k Views </span>
                 </div>
-            </div>
+            </div></>:
+            <>
+             <video src={data.slice(0,1).map((data,key)=>{return data.video})} onClick={()=>setToggle(false)} controls autoPlay/>
+             </>
+            }
+
+            
         </div>   
 
         <div className="video-content">
@@ -61,7 +64,7 @@ const Content = () => {
                 </div>
             </div>
             <div className="videos">            
-                {!banner? data.slice(0,4).map((data,key) => {
+                {!banner? data.slice(0,5).map((data,key) => {
                        return <Card data={data} videoData={videoData}/>
                     }):
                     data.map((data) => {
