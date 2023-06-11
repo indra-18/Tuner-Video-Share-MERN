@@ -7,6 +7,7 @@ body {
 .banner {
   height: 55vh;
   width: 100%;
+  position: relative;
 }
 .banner:hover {
   cursor: pointer;
@@ -30,7 +31,7 @@ img:hover {
 .banner > video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
   margin: auto;
   margin-bottom: 0%;
 }
@@ -69,6 +70,7 @@ img:hover {
   width: 100%;
   cursor: pointer;
   background-color: black;
+  position: relative;
 }
 .bannerclass > video {
   width: 100%;
@@ -88,17 +90,24 @@ img:hover {
 .details {
   margin-top: 1.8%;
   position: absolute;
-  top: 10vh;
+  top: 5vh;
   margin-left: 2%;
-  width: 30%;
+  width: auto;
+
 }
 .details h1 {
-  font-size: 40px;
+  font-weight: bold;
+  font-size: x-large;
+
 }
-.span span {
-  margin: 2%;
+.span{
   color: white;
+  /* width: 50%; */
+  /* display: flex;
+  justify-content: space-around; */
 }
+/* margin: 2%; */
+
 .title {
   width: 100%;
   height: 18vh;
@@ -117,3 +126,5 @@ img:hover {
   flex-wrap: wrap;
   gap: 3vh;
 }
+
+
