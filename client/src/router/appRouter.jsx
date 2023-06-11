@@ -1,25 +1,18 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import Home from '../components/homePage/Home'
-// import Register from '../components/registerPage/Register'
-// import Login from '../components/loginPage/Login'
-// import VideoPage from "../components/videoPage/VideoPage";
-// import MyVideosPage from "../components/myVideosPage/MyVideosPage";
-// import SearchedList from "../components/searchListPage/SearchedList";
-// import PageNotFound from "../components/PageNotFound";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const LazyHome = lazy(() => import("../components/homePage/Home"));
 const LazyRegister = lazy(() => import("../components/registerPage/Register"));
 const LazyLogin = lazy(() => import("../components/loginPage/Login"));
-const LazyVideoPage = lazy(() => import("../components/videoPage/VideoPage"));
 const LazyMyVideosPage = lazy(() =>
   import("../components/myVideosPage/MyVideosPage")
 );
 const LazySearchedList = lazy(() =>
   import("../components/searchListPage/SearchedList")
 );
+const LazyVideoPage = lazy(() => import("../components/videoPage/VideoPage"));
 const LazyPageNotFound = lazy(() => import("../components/PageNotFound"));
 
 const AppRouter = () => {
@@ -37,7 +30,7 @@ const AppRouter = () => {
         <Route
           path="/register"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazyRegister />
             </Suspense>
           }
@@ -45,7 +38,7 @@ const AppRouter = () => {
         <Route
           path="/myvideos"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazyMyVideosPage />
             </Suspense>
           }
@@ -53,7 +46,7 @@ const AppRouter = () => {
         <Route
           path="/searchlist"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazySearchedList />
             </Suspense>
           }
@@ -61,7 +54,7 @@ const AppRouter = () => {
         <Route
           path="/searchlist/video/:videoId"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazyVideoPage />
             </Suspense>
           }
@@ -69,7 +62,7 @@ const AppRouter = () => {
         <Route
           path="*"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazyPageNotFound />
             </Suspense>
           }
@@ -77,12 +70,19 @@ const AppRouter = () => {
         <Route
           path="/login"
           element={
-            <Suspense>
+            <Suspense fallback="Loading...">
               <LazyLogin />
             </Suspense>
           }
         />
-        {/* <Route path='/home/video/:videoId' element={<VideoPage />} /> */}
+        <Route
+          path="/home/video/:videoId"
+          element={
+            <Suspense fallback="Loading...">
+              <LazyVideoPage />
+            </Suspense>
+          }
+        />
       </Routes>
       <ToastContainer theme="dark" />
     </BrowserRouter>

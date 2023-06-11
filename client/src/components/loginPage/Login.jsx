@@ -21,7 +21,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:4943/api/v1/auth/login", {
+      const res = await axios.post(`${import.meta.env.VITE_NODE_API}api/v1/auth/login`, {
         email,
         password,
       });
@@ -33,7 +33,6 @@ const Login = () => {
           token: res.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(res.data));
-        console.log(auth);
         navigate(location.state || "/");
       } else {
         notifyA(res.data.message);

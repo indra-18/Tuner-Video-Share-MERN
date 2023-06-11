@@ -6,6 +6,7 @@ import { options } from "../constants/index";
 import { postVideo } from "../services/nodeApi";
 import close from "../assets/close.svg";
 import { VideoContext } from "../contextApi/VideoContextApi";
+import { useAuth } from '../contextApi/appContext'
 
 const Upload = () => {
   const [openDropdown, setOpenDropdown] = useState({});
@@ -63,7 +64,7 @@ const Upload = () => {
     });
     setPreview(null);
   };
-  // console.log(auth.user)
+  const [auth, setAuth] = useAuth()
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -81,6 +82,10 @@ const Upload = () => {
       const response = await postVideo(userId, videoData);
       successMessage("Video Saved Successfully")
       resetForm()
+      setDropdownValues({
+        Category: "",
+        Visibility: "",
+      });
     } catch (error) {
       errorMessage(error.message)
     }

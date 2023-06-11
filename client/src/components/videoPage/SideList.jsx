@@ -8,27 +8,29 @@ const SideList = () => {
   const [recommendedList, setRecommendedList] = useState([])
   const { videoId } = useParams();
   const location = useLocation();
-  const { searchResults } = useContext(VideoContext);
+  const { searchResults, allVideos } = useContext(VideoContext);
 
   const isFromSearch = location.pathname.includes('searchlist')
 
   useEffect(() => {
     if (isFromSearch && videoId) {
       setRecommendedList(searchResults)
+    } else {
+      setRecommendedList(allVideos)
     }
   }, [videoId])
-
+  console.log(recommendedList)
   
   return (
     <div className='w-1/3 bg-[#0F121FF5]'>
-      <aside className=' ml-6 mt-12 w-4/5'>
+      <aside className=' ml-6 mt-12 w-4/5 h-[calc(100vh-8rem)] overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'>
       <ul className=" m-8 grid grid-row-3 gap-4">
         {recommendedList.map((card) => (
           <li key={card._id} className="flex items-center"
           onClick={window.scrollTo(0, 0)}
           >
-            <Link to={`/searchlist/video/${card._id}`}>
-              <div className="relative w-full h-38 w-">
+            <Link to={`/${isFromSearch ? 'searchlist' : 'home'}/video/${card._id}`}>
+              <div className="relative w-full h-38  max-sm:w-screen max-sm:overflow-y-hidden">
                 <video className="w-full h-full object-cover rounded hover:border-[#C4B4F8] hover:border-4">
                   <source src={card.video} type="video/mp4" />
                   Your browser does not support the video tag.

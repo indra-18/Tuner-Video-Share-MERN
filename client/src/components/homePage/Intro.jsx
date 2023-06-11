@@ -46,7 +46,6 @@ const Content = () => {
     } else {
       setName("View all");
     }
-   
     return (<>
         <div className={`banner${banner}`} id="height">
           
@@ -86,7 +85,9 @@ const Content = () => {
                     })
                 }
             </div>
+
         </div>
+      </div>
     </>
   );
 }};

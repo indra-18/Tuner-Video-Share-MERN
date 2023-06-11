@@ -10,10 +10,10 @@ const SearchedList = () => {
   const { searchResults } = useContext(VideoContext);
 
   return (
-    <div className="bg-[#0F121FF5] w-full h-screen ">
+    <div className="bg-[#0F121FF5] w-full h-screen max-sm:h-full max-sm:bg-[#0F121FF5]">
       <Navbar />
       <div className="relative">
-        <ul className=" m-8 grid grid-cols-4 gap-4">
+        <ul className=" m-8 grid grid-cols-4 gap-4 max-sm:grid-cols-1">
           {searchResults.map((card) => (
             <li key={card._id} className="flex items-center">
               <Link to={`/searchlist/video/${card._id}`}>
