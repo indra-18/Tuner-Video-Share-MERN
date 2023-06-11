@@ -1,36 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "./card";
-import "./Intro.css"
+import "./Intro.css";
 import axios from "axios";
+import { getAllVideos } from "../../services/nodeApi";
+import { VideoContext } from "../../contextApi/VideoContextApi";
+
 const Content = () => {
-    const [banner, setBanner] = useState("");
-    const [name, setName] = useState("View all");
-    const [toggle,setToggle] = useState(false)
-    const [data, setData] = useState([]);
-    const [videoData, setVideoData] = useState([]);
+  const [banner, setBanner] = useState("");
+  const [name, setName] = useState("View all");
+  const [toggle, setToggle] = useState(false);
+  const [data, setData] = useState([]);
+  const [videoData, setVideoData] = useState([]);
+  const { handleSetAllVideos } = useContext(VideoContext);
 
-    useEffect(() => {
-        axios.get("http://localhost:4943/video")
-            .then((res) => {
-                setData(res.data)
-                setVideoData(res.data)
-            }).catch((err) => {
-                window.alert("Vidoes are unavailable to load")
-            })
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_NODE_API}video`)
+      .then((res) => {
+        setData(res.data);
+        setVideoData(res.data);
+      })
+      .catch((err) => {
+        window.alert("Vidoes are unavailable to load");
+      });
 
-    }, []);
+    const getVideos = async () => {
+      try {
+        const result = await getAllVideos();
+        handleSetAllVideos(result);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    getVideos();
+  }, []);
 
-    const handleViewButton = () => {
-        if (banner) {
-            setBanner("")
-        } else {
-            setBanner("class")
-        }
-        if (name === "View all") {
-            setName("View less")
-        } else {
-            setName("View all")
-        }
+  const handleViewButton = () => {
+    if (banner) {
+      setBanner("");
+    } else {
+      setBanner("class");
+    }
+    if (name === "View all") {
+      setName("View less");
+    } else {
+      setName("View all");
     }
    
     return (<>
@@ -74,6 +88,6 @@ const Content = () => {
             </div>
         </div>
     </>
-    )
-}
+  );
+}};
 export default Content;
