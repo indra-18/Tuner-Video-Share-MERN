@@ -5,6 +5,16 @@ import { useAuth } from "../../contextApi/appContext";
 import { toast } from "react-toastify";
 
 const Edit = ({ selectedVideo }) => {
+  
+const [isMobile, setIsMobile] = useState(false)
+ 
+const handleResize = () => {
+  if (window.innerWidth < 640) {
+      setIsMobile(true)
+  } else {
+      setIsMobile(false)
+  }
+}
   const [openDropdown, setOpenDropdown] = useState({});
   const [video, setVideo] = useState({});
   const [auth] = useAuth();
@@ -74,6 +84,7 @@ const Edit = ({ selectedVideo }) => {
       }
     };
     getVideo(videoId);
+    window.addEventListener("resize", handleResize)
   }, [videoId, userId]);
 
   const submitForm = async (e) => {
@@ -99,14 +110,15 @@ const Edit = ({ selectedVideo }) => {
       errorMessage(err.message);
     }
   };
+  console.log(isMobile)
 
   return (
-    <div className="w-1/2 bg-[#0F121FF5]">
+    <div className=" max-sm:w-full w-1/2 bg-[#0F121FF5]">
       {!videoId || !userId ? (
         <p className="text-center font-extrabold text-4xl">User has no videos to edit</p>
       ) : (
         <div>
-          <div className=" min-w-full aspect-w-16 h-48">
+          <div className=" min-w-full aspect-w-16 h-44">
             <video src={video.video} className="w-full h-full object-cover" />
           </div>
           <form
@@ -115,7 +127,7 @@ const Edit = ({ selectedVideo }) => {
             onSubmit={submitForm}
             encType="application/json"
           >
-            <div className="flex justify-between p-2">
+            <div className="sm:flex justify-between p-2">
               <div
                 style={{
                   maxWidth: "50%",
@@ -133,7 +145,7 @@ const Edit = ({ selectedVideo }) => {
                 />
               </div>
               <div className="flex items-baseline">
-                <div className="ml-2 text-gray-200 text-xs mt-1">
+                <div className="sm:ml-2 text-gray-200 text-xs mt-1">
                   {video.date}
                 </div>
                 <div className="ml-2 text-gray-200 text-xs px-1 py">
@@ -146,18 +158,18 @@ const Edit = ({ selectedVideo }) => {
             </div>
             <hr className=" mx-2 border-gray-700" />
             <div className=" py-1 px-2">
-              <p className="text-white py-1">Description</p>
+              <p className="text-white underline">Description:</p>
               <textarea
                 type="text"
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                className="focus:outline-none bg-[#0F121FF5] min-w-full text-white h-16 placeholder:text-sm placeholder:text-gray-500"
+                className=" text-sm focus:outline-none bg-[#0F121FF5] min-w-full text-white h-10 placeholder:text-sm placeholder:text-gray-500"
                 placeholder="Description"
               />
             </div>
             <hr className=" mx-2 border-gray-700" />
-            <div className="flex justify-around py-3">
+            <div className="sm:flex justify-around py-1">
               {options.map((option) => (
                 <div key={option.title}>
                   <p className="text-xs text-gray-500 pl-6">{option.title}</p>
@@ -213,7 +225,7 @@ const Edit = ({ selectedVideo }) => {
               ))}
             </div>
             <hr className=" mx-2 border-gray-700" />
-            <div className=" mt-10 mb-3 h-fit flex justify-between">
+            <div className=" mt-10 mb-3 h-fit sm:flex justify-between">
               <button
                 className=" mx-4 mt-6 hover:bg-red-800 text-white font-bold py-2 px-12 bg-red-500 rounded-[28px]"
                 onClick={handleDeleteButton}

@@ -25,7 +25,7 @@ const List = ({ handleSelectedVideo }) => {
   }, [myVideos]);
 
   return (
-    <div className="w-1/2 bg-[#0F121FF5]">
+    <div className="w-1/2 bg-[#0F121FF5] max-sm:w-full">
       <div className=" mx-6 flex justify-between items-baseline mt-3">
         <p className="text-white">My Videos</p>
         <button
@@ -55,9 +55,9 @@ const List = ({ handleSelectedVideo }) => {
       </div>
       {
         !showRecent ? null : (
-          <ul className=" grid grid-cols-2 gap-3">
+          <ul className=" sm:grid sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-4">
         {allVideos.map((card) => (
-          <li key={card._id} className="flex items-center"
+          <li key={card._id} className="flex items-center max-sm:mb-3"
           onClick={() => {handleSelectedVideo(card._id)}}
           >
               <div className=" relative w-5/6 ml-6 h-auto">
