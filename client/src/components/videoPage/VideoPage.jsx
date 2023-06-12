@@ -8,7 +8,7 @@ const VideoPage = () => {
   return (
     <>
       <Navbar />
-      <div className="flex relative max-sm:flex-col">
+      <div className="md:flex relative">
         <MainVideo />
         <SideList />
         <Upload />

@@ -13,11 +13,11 @@ const SearchedList = () => {
     <div className="bg-[#0F121FF5] w-full h-screen max-sm:h-full max-sm:bg-[#0F121FF5]">
       <Navbar />
       <div className="relative">
-        <ul className=" m-8 grid  gap-2 grid-cols-[repeat(auto-fit,minmax(130px,1fr))] sm:gap-4">
+        <ul className=" m-8  gap-4 block sm:grid sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-4">
           {searchResults.map((card) => (
-            <li key={card._id} className="flex items-center">
+            <li key={card._id} className="flex items-center max-sm:mb-4">
               <Link to={`/searchlist/video/${card._id}`}>
-                <div className="relative w-full h-40">
+                <div className="relative w-full h-auto">
                   <video className="w-full h-full object-cover rounded hover:border-[#C4B4F8] hover:border-4">
                     <source src={card.video} type="video/mp4" />
                     Your browser does not support the video tag.
