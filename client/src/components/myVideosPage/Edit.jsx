@@ -127,7 +127,7 @@ const handleResize = () => {
             onSubmit={submitForm}
             encType="application/json"
           >
-            <div className="sm:flex justify-between p-2">
+            <div className="md:flex justify-between p-2">
               <div
                 style={{
                   maxWidth: "50%",
@@ -169,7 +169,7 @@ const handleResize = () => {
               />
             </div>
             <hr className=" mx-2 border-gray-700" />
-            <div className="sm:flex justify-around py-1">
+            <div className="md:flex justify-around py-1">
               {options.map((option) => (
                 <div key={option.title}>
                   <p className="text-xs text-gray-500 pl-6">{option.title}</p>
@@ -225,7 +225,7 @@ const handleResize = () => {
               ))}
             </div>
             <hr className=" mx-2 border-gray-700" />
-            <div className=" mt-10 mb-3 h-fit sm:flex justify-between">
+            <div className=" mt-10 mb-3 h-fit md:flex justify-between">
               <button
                 className=" mx-4 mt-6 hover:bg-red-800 text-white font-bold py-2 px-12 bg-red-500 rounded-[28px]"
                 onClick={handleDeleteButton}
