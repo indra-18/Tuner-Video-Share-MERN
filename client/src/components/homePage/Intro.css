@@ -47,18 +47,18 @@ img:hover {
 
   justify-content: space-between;
 
-  margin: 2vh;
+  margin: 1vh;
 }
 .recent {
   margin-top: 1vh;
-  margin-left: 1vh;
+  margin-left: 3vh;
   font-size: 18px;
   color: rgb(253, 253, 252);
 }
 
 .view-all {
   margin-top: 1vh;
-  margin-right: 1vh;
+  margin-right: 3vh;
   cursor: pointer;
 }
 .view-all:hover {
@@ -109,11 +109,4 @@ img:hover {
 .title h1 {
   color: rgb(191, 22, 22);
   font-size: 45px;
-}
-.videos {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 3vh;
 }
