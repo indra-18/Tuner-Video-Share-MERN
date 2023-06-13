@@ -1,8 +1,14 @@
 import axios from 'axios'
 
-export const postVideo = async (userId, videoData) => {
+export const postVideo = async (userId, videoData, onProgress) => {
     try {
-        const response = await axios.post(`${import.meta.env.VITE_NODE_API}video/${userId}`, videoData)
+        const config = {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            onUploadProgress: onProgress,
+          };
+        const response = await axios.post(`${import.meta.env.VITE_NODE_API}video/${userId}`, videoData, config)
         return response
     } catch (err) {
         return err.message
