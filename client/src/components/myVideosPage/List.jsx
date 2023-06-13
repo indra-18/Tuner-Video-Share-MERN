@@ -5,7 +5,7 @@ import playIcon from "../../assets/playIcon.png";
 import userIcon from "../../assets/userIcon.jpg";
 import { getById } from "../../services/nodeApi";
 
-const List = ({ handleSelectedVideo }) => {
+const List = ({ handleSelectedVideo, updatedList }) => {
   const [allVideos, setAllVideos] = useState([]);
   const [showRecent, setShowRecent] = useState(true)
   const [auth] = useAuth();
@@ -19,10 +19,13 @@ const List = ({ handleSelectedVideo }) => {
           return video;
         })
       );
+      if (updatedAllVideos[0] === null) {
+        updatedAllVideos.shift();
+      }
       setAllVideos(updatedAllVideos);
     };
     fetchVideos();
-  }, [myVideos]);
+  }, [myVideos, updatedList]);
 
   return (
     <div className="w-1/2 bg-[#0F121FF5] max-sm:w-full">

@@ -6,15 +6,21 @@ import Upload from '../Upload'
 
 const MyVideosPage = () => {
   const [selectedVideo, setSelectedVideo] = useState('');
+  const [updatedList, setUpdatedList] = useState(0);
+
   const handleSelectedVideo = (videoId) => {
     setSelectedVideo(videoId)
+  }
+  const handleUpdatedList = () => {
+    setUpdatedList(prev => prev+1)
   }
   return (
     <div>
       <Navbar />
       <div className='flex relative max-sm:flex-col'>
-        <List handleSelectedVideo={handleSelectedVideo} />
-        <Edit selectedVideo={selectedVideo} className=" hidden"/>
+        <List handleSelectedVideo={handleSelectedVideo} updatedList={updatedList} />
+        <Edit handleSelectedVideo={handleSelectedVideo} selectedVideo={selectedVideo} 
+        handleUpdatedList={handleUpdatedList}/>
         <Upload />
       </div>
     </div>

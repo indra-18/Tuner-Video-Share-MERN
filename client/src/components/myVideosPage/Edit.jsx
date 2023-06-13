@@ -4,7 +4,7 @@ import { options } from "../../constants";
 import { useAuth } from "../../contextApi/appContext";
 import { toast } from "react-toastify";
 
-const Edit = ({ selectedVideo }) => {
+const Edit = ({ selectedVideo, handleUpdatedList, handleSelectedVideo }) => {
   
 const [isMobile, setIsMobile] = useState(false)
  
@@ -61,31 +61,32 @@ const handleResize = () => {
     toggleDropdown(option);
   };
 
+  const getVideo = async (videoId) => {
+    if (!videoId || !userId) {
+      return <p className="text-center font-extrabold text-4xl">User has no videos to edit</p>
+    }
+    try {
+      const result = await getById(videoId);
+      setVideo(result);
+      setFormData({
+        title: result.title,
+        description: result.description,
+        category: result.category,
+        visibility: result.visibility,
+      });
+      setDropdownValues({
+        Category: result.category,
+        Visibility: result.visibility,
+      });
+    } catch (err) {
+      errorMessage(err.message);
+    }
+  };
+
   useEffect(() => {
-    const getVideo = async (videoId) => {
-      if (!videoId || !userId) {
-        return <p className="text-center font-extrabold text-4xl">User has no videos to edit</p>
-      }
-      try {
-        const result = await getById(videoId);
-        setVideo(result);
-        setFormData({
-          title: result.title,
-          description: result.description,
-          category: result.category,
-          visibility: result.visibility,
-        });
-        setDropdownValues({
-          Category: result.category,
-          Visibility: result.visibility,
-        });
-      } catch (err) {
-        errorMessage(err.message);
-      }
-    };
     getVideo(videoId);
     window.addEventListener("resize", handleResize)
-  }, [videoId, userId]);
+  }, [videoId, userId, selectedVideo, auth.user.myVideos.length]);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -97,6 +98,7 @@ const handleResize = () => {
     try {
       const result = await updateVideo(userId, videoId, formData);
       successMessage(result);
+      handleUpdatedList();
     } catch (error) {
       errorMessage(error.message);
     }
@@ -105,12 +107,20 @@ const handleResize = () => {
   const handleDeleteButton = async () => {
     try {
       const result = await deleteVideo(userId, videoId);
+      handleUpdatedList();
+      const videoIndex = auth.user.myVideos.indexOf(videoId);
+      if (videoIndex !== -1) {
+        auth.user.myVideos.splice(videoIndex, 1);
+      }
+      const newVideoId = auth.user.myVideos[0];
+      handleSelectedVideo(newVideoId);
+      getVideo(newVideoId);
       successMessage(result);
     } catch (err) {
       errorMessage(err.message);
     }
   };
-  console.log(isMobile)
+  
 
   return (
     <div className=" max-sm:w-full w-1/2 bg-[#0F121FF5]">
@@ -227,6 +237,7 @@ const handleResize = () => {
             <hr className=" mx-2 border-gray-700" />
             <div className=" mt-10 mb-3 h-fit md:flex justify-between">
               <button
+                type="button"
                 className=" mx-4 mt-6 hover:bg-red-800 text-white font-bold py-2 px-12 bg-red-500 rounded-[28px]"
                 onClick={handleDeleteButton}
               >
