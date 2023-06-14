@@ -20,12 +20,13 @@ const MainVideo = () => {
   }, [videoId])
 
   return (
-    <div className='w-2/3 bg-[#0F121FF5] max-sm:w-full'>
-      <div className=' mt-12 ml-12'>
+    <div className='w-full h-auto
+     lg:w-2/3 bg-[#0F121FF5]'>
+      <div className=' mt-8 ml-12 max-lg:mr-4 max-lg:ml-4 max-lg:mt-4'>
         <div className=' w-full h-auto rounded-lg'>
           <video src={video.video} controls autoPlay className=' rounded-lg w-full h-full' />
         </div>
-        <div className=' w-full flex justify-between items-center min-h-[80px] bg-[#000000]'>
+        <div className=' w-full sm:flex justify-between items-center min-h-[80px] bg-[#000000]'>
           <div className='flex'>
             <img src={userIcon} className=" ml-1 rounded-full max-h-6 max-w-6" />
             <div 
@@ -33,7 +34,7 @@ const MainVideo = () => {
             className=" ml-3 text-white font-bold text-justify text-xs mt-1"
             >{video.title}</div>
           </div>
-          <div className='flex items-baseline'>
+          <div className='flex items-baseline max-md:mt-2 max-md:ml-2'>
             <div className=" pr-6 text-gray-200 text-xs mt-1">{video.date}</div>
             <div className=" pr-6 text-gray-200 text-xs px-1 py">{video.duration} Mins</div>
             <div className=" pr-6 text-gray-200 text-xs mt-1">{video.views} Views</div>

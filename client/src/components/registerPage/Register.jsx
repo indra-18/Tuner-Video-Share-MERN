@@ -1,5 +1,4 @@
 import React,{useState} from 'react'
-import Hero from '../Hero'
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
@@ -67,12 +66,12 @@ const Register = () => {
             z-0">
     </div>
     <div className="w-full mx-auto px-20 space-y-6">
-      <h1 className="font-extrabold text-8xl font-normal text-purple-400" id='marginT'>Tuner</h1>
+      <h1 className=" text-8xl font-normal text-purple-400" id='marginT'>Tuner</h1>
       <p className="text-white text-4xl" id='margin'>Enjoy Multiple videos</p>
       <p className="text-white text-4xl" id='marginp'>at one place</p>
 
       <div className="mt-40 pt-36">
-        <NavLink to="/login" className="mt-40 hover:text-indigo-800 hover:-translate-y-1 transition-all duration-500 text-white text-2xl mt-40 font-normal mb-2 underline" id='paddingT'>
+        <NavLink to="/login" className=" hover:text-indigo-800 hover:-translate-y-1 transition-all duration-500 text-white text-2xl mt-40 font-normal mb-2 underline" id='paddingT'>
         Sign In</NavLink>
       </div>
       </div>

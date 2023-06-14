@@ -1,33 +1,26 @@
 import React, { useContext, useEffect, useState } from "react";
 import Card from "./card";
 import "./Intro.css";
-import axios from "axios";
 import { getAllVideos } from "../../services/nodeApi";
 import { VideoContext } from "../../contextApi/VideoContextApi";
+import Loader from "../Loader";
 
 const Content = () => {
   const [banner, setBanner] = useState("");
   const [name, setName] = useState("View all");
   const [toggle, setToggle] = useState(false);
   const [data, setData] = useState([]);
-  const [videoData, setVideoData] = useState([]);
   const { handleSetAllVideos } = useContext(VideoContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_NODE_API}video`)
-      .then((res) => {
-        setData(res.data);
-        setVideoData(res.data);
-      })
-      .catch((err) => {
-        window.alert("Vidoes are unavailable to load");
-      });
-
     const getVideos = async () => {
       try {
-        const result = await getAllVideos();
-        handleSetAllVideos(result);
+        setIsLoading(true);
+        const response = await getAllVideos();
+        setData(response);
+        handleSetAllVideos(response);
+        setIsLoading(false);
       } catch (err) {
         console.log(err.message);
       }
@@ -83,23 +76,27 @@ const Content = () => {
         </div>
       </div>
 
-      <div className="video-content">
-        <div className="btns">
-          <div className="recent">Recent</div>
-          <div className="view-all" onClick={handleViewButton}>
-            {name}
+      {!isLoading ? (
+        <div className="video-content">
+          <div className="btns">
+            <div className="recent">Recent</div>
+            <div className="view-all" onClick={handleViewButton}>
+              {name}
+            </div>
+          </div>
+          <div className="videos">
+            <ul className=" ml-8 mr-8 mb-8  gap-4 block sm:grid sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-4">
+              {!banner
+                ? data.slice(0, 4).map((data) => {
+                    return <Card key={data._id} data={data} />;
+                  })
+                : data.map((data) => {
+                    return <Card key={data._id} data={data} />;
+                  })}
+            </ul>
           </div>
         </div>
-        <div className="videos">
-          {!banner
-            ? data.slice(0, 4).map((data) => {
-                return <Card key={data._id} data={data} videoData={videoData} />;
-              })
-            : data.map((data) => {
-                return <Card key={data._id} data={data} videoData={videoData} />;
-              })}
-        </div>
-      </div>
+      ) : <Loader />}
     </>
   );
 };

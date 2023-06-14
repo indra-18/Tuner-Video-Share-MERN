@@ -7,10 +7,13 @@ import { postVideo } from "../services/nodeApi";
 import close from "../assets/close.svg";
 import { VideoContext } from "../contextApi/VideoContextApi";
 import { useAuth } from '../contextApi/appContext'
+import Progress from "./Progress";
 
 const Upload = () => {
   const [openDropdown, setOpenDropdown] = useState({});
   const [preview, setPreview] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [progress, setProgress] = useState(0)
 
   const [formData, setFormData] = useState({
     name: "",
@@ -64,10 +67,20 @@ const Upload = () => {
     });
     setPreview(null);
   };
+
+  const handleProgress = (progressEvent) => {
+    const videoProgress = Math.round(
+      (progressEvent.loaded / progressEvent.total) * 100
+    );
+    setProgress(videoProgress);
+  };
+
+  
   const [auth, setAuth] = useAuth()
 
   const submitForm = async (e) => {
     e.preventDefault();
+    setIsUploading(true)
     const userId = auth.user._id;
     const videoData = new FormData();
     videoData.append("title", formData.name);
@@ -79,15 +92,19 @@ const Upload = () => {
     videoData.append("visibility", formData.visibility);
     
     try {
-      const response = await postVideo(userId, videoData);
-      successMessage("Video Saved Successfully")
+      const response = await postVideo(userId, videoData, handleProgress);
+      successMessage("Video Saved Successfully");
+      setIsUploading(false)
       resetForm()
       setDropdownValues({
         Category: "",
         Visibility: "",
       });
+      setProgress(0)
     } catch (error) {
-      errorMessage(error.message)
+      errorMessage(error.message);
+      setIsUploading(false);
+      setProgress(0)
     }
   };
 
@@ -216,7 +233,7 @@ const Upload = () => {
                 placeholder="Description"
               />
               <hr className=" mx-1 border-gray-700" />
-              <div className="flex justify-around py-3">
+              <div className=" sm:flex justify-around py-3">
                 {options.map((option) => (
                   <div key={option.title}>
                     <p className=" text-xs text-gray-500 pl-6">{option.title}</p>
@@ -278,12 +295,16 @@ const Upload = () => {
               </div>
               <hr className=" mx-1 border-gray-700" />
               <div className="flex justify-center mt-3">
-                <button
+                {isUploading ? 
+                <div className="flex hover:bg-violet-500 font-bold py-3 px-20 bg-[#7e73a3] rounded-[28px]">
+                  <Progress value={progress} />
+                </div> :                 
+                  <button
                   type="submit"
-                  className="text-white hover:bg-violet-500 font-bold py-3 px-20 bg-[#C4B4F8] rounded-[28px]"
+                  className="text-white hover:bg-violet-500 font-bold py-3 px-20 bg-[#7e73a3] rounded-[28px]"
                 >
                   Save
-                </button>
+                </button>}
               </div>
             </div>
           </div>
