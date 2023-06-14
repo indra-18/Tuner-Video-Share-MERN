@@ -202,11 +202,11 @@ const Upload = () => {
                       video: selectedFile || null,
                     }));
 
-                    if (file) {
+                    if (selectedFile) {
                       reader.onload = () => {
                         setPreview(reader.result);
                       };
-                      reader.readAsDataURL(file);
+                      reader.readAsDataURL(selectedFile);
                     } else {
                       setPreview(null);
                     }
