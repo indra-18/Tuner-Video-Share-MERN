@@ -7,7 +7,7 @@ const Card = ({ data }) => {
   return (
     <>
       <Link to={`/home/video/${data._id}`}>
-        <div className="relative w-full h-40">
+        <div className="relative w-full h-40 max-sm:mb-3">
           <video className="w-full h-full object-cover rounded hover:border-[#C4B4F8] hover:border-4">
             <source src={data.video} type="video/mp4" />
             Your browser does not support the video tag.
