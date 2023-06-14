@@ -10,13 +10,16 @@ const Content = () => {
   const [toggle, setToggle] = useState(false);
   const [data, setData] = useState([]);
   const { handleSetAllVideos } = useContext(VideoContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getVideos = async () => {
       try {
+        setIsLoading(true);
         const response = await getAllVideos();
         setData(response);
         handleSetAllVideos(response);
+        setIsLoading(false);
       } catch (err) {
         console.log(err.message);
       }
@@ -72,25 +75,38 @@ const Content = () => {
         </div>
       </div>
 
-      <div className="video-content">
-        <div className="btns">
-          <div className="recent">Recent</div>
-          <div className="view-all" onClick={handleViewButton}>
-            {name}
+      {!isLoading ? (
+        <div className="video-content">
+          <div className="btns">
+            <div className="recent">Recent</div>
+            <div className="view-all" onClick={handleViewButton}>
+              {name}
+            </div>
+          </div>
+          <div className="videos">
+            <ul className=" ml-8 mr-8 mb-8  gap-4 block sm:grid sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-4">
+              {!banner
+                ? data.slice(0, 4).map((data) => {
+                    return <Card key={data._id} data={data} />;
+                  })
+                : data.map((data) => {
+                    return <Card key={data._id} data={data} />;
+                  })}
+            </ul>
           </div>
         </div>
-        <div className="videos">
-          <ul className=" ml-8 mr-8 mb-8  gap-4 block sm:grid sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-4">
-            {!banner
-              ? data.slice(0, 4).map((data) => {
-                  return <Card key={data._id} data={data}/>;
-                })
-              : data.map((data) => {
-                  return <Card key={data._id} data={data} />;
-                })}
-          </ul>
+      ) : (
+        <div className="w-full h-auto flex justify-center items-center align-middle">
+          <div
+            class=" text-green-600 inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-success motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          >
+            <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              Loading...
+            </span>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
