@@ -16,7 +16,6 @@ const Login = () => {
   
 
   const notifyA = (msg) => toast.error(msg)
-  const notifyB = (msg) => toast.success(msg)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -25,7 +24,6 @@ const Login = () => {
         password,
       });
       if (res && res.data.success) {
-        notifyB(res.data.message);
         setAuth({
           ...auth,
           user: res.data.user,
