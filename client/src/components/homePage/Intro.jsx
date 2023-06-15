@@ -10,7 +10,7 @@ const Content = () => {
   const [banner, setBanner] = useState("");
   const [name, setName] = useState("View all");
   const [data, setData] = useState([]);
-  const { handleSetAllVideos } = useContext(VideoContext);
+  const { handleSetAllVideos, updatedList } = useContext(VideoContext);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Content = () => {
       }
     };
     getVideos();
-  }, []);
+  }, [updatedList]);
 
   const handleViewButton = () => {
     if (banner) {

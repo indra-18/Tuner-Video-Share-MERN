@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useAuth } from "../../contextApi/appContext";
 import playIcon from "../../assets/playIcon.png";
 import userIcon from "../../assets/userIcon.jpg";
 import { getById } from "../../services/nodeApi";
 import Loader from "../Loader";
+import { VideoContext } from "../../contextApi/VideoContextApi";
 
-const List = ({ handleSelectedVideo, updatedList }) => {
+const List = ({ handleSelectedVideo }) => {
+  const { updatedList } = useContext(VideoContext)
   const [allVideos, setAllVideos] = useState([]);
   const [showRecent, setShowRecent] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [auth] = useAuth();
-  const myVideos = auth.user.myVideos;
 
   useEffect(() => {
+    const myVideos = auth.user.myVideos;
     const fetchVideos = async () => {
       setIsLoading(true);
       const updatedAllVideos = await Promise.all(
@@ -28,7 +30,7 @@ const List = ({ handleSelectedVideo, updatedList }) => {
       setIsLoading(false);
     };
     fetchVideos();
-  }, [myVideos, updatedList]);
+  }, [updatedList]);
 
   return (
     <div className="w-1/2 bg-[#0F121FF5] max-sm:w-full">

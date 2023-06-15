@@ -83,7 +83,7 @@ const Navbar = () => {
     </div>
   </div>) : (<div className="invisible sm:visible">
     <div className="flex gap-3 mt-3">
-      <NavLink to="/myvideos" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">My Video</NavLink>
+      <NavLink to="/myvideos" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">My Videos</NavLink>
       <p className="block px-3 py-2 rounded-md text-base font-medium text-gray-300">|</p>
       <NavLink to="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white"
       onClick={() => handleShowUpload(true)}
@@ -102,7 +102,7 @@ const Navbar = () => {
 </div>}
 {toggle && auth?.user && <div className="sm:hidden" id="mobile-menu">
   <div className="px-2 pt-2 pb-3 space-y-1">
-      <NavLink to="/myvideos" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">My Video</NavLink>
+      <NavLink to="/myvideos" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white">My Videos</NavLink>
       <NavLink to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white"
       onClick={() => handleShowUpload(true)}
       >Upload</NavLink>

@@ -29,7 +29,7 @@ const Upload = () => {
     Visibility: "",
   });
 
-  const { showUpload, handleShowUpload } = useContext(VideoContext)
+  const { showUpload, handleShowUpload, handleUpdatedList } = useContext(VideoContext)
 
   const successMessage = (message) => toast.success(message)
   const errorMessage = (message) => toast.error(message)
@@ -95,6 +95,7 @@ const Upload = () => {
       const response = await postVideo(userId, videoData, handleProgress);
       successMessage("Video Saved Successfully");
       setIsUploading(false)
+      handleUpdatedList()
       resetForm()
       setDropdownValues({
         Category: "",
