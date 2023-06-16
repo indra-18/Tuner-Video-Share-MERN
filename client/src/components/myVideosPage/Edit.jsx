@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getById, updateVideo, deleteVideo } from "../../services/nodeApi";
 import { options } from "../../constants";
 import { useAuth } from "../../contextApi/appContext";
 import { toast } from "react-toastify";
+import { VideoContext } from "../../contextApi/VideoContextApi";
 
-const Edit = ({ selectedVideo, handleUpdatedList, handleSelectedVideo }) => {
+const Edit = ({ selectedVideo, handleSelectedVideo }) => {
+
+const { handleUpdatedList } = useContext(VideoContext)
   
 const [isMobile, setIsMobile] = useState(false)
  

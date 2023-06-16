@@ -6,9 +6,13 @@ const VideoContextProvider = ({children}) => {
     const [searchResults, setSearchResults] = useState([]);
     const [showUpload, setShowUpload] = useState(false);
     const [allVideos, setAllVideos] = useState([])
-
+    const [updatedList, setUpdatedList] = useState(0);
 
     return <VideoContext.Provider value={{
+        updatedList,
+        handleUpdatedList : () => {
+            setUpdatedList(prev => prev+1)
+        },
         searchResults,
         searchVideo: (videos) => {
             setSearchResults(videos)

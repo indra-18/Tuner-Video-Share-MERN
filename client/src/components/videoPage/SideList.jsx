@@ -19,7 +19,6 @@ const SideList = () => {
       setRecommendedList(allVideos)
     }
   }, [videoId])
-  console.log(recommendedList)
   
   return (
     <div className='w-full lg:w-1/3 bg-[#0F121FF5]'>
