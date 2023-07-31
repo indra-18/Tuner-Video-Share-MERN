@@ -9,8 +9,7 @@ import HomeCarousel from "./HomeCarousel";
 const Content = () => {
   const [banner, setBanner] = useState("");
   const [name, setName] = useState("View all");
-  const [data, setData] = useState([]);
-  const { handleSetAllVideos, updatedList } = useContext(VideoContext);
+  const { handleSetAllVideos, updatedList, allVideos } = useContext(VideoContext);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -19,8 +18,7 @@ const Content = () => {
         setIsLoading(true);
         const response = await getAllVideos();
         const reversedResponse = response.reverse();
-        setData(reversedResponse);
-        handleSetAllVideos(response);
+        handleSetAllVideos(reversedResponse);
         setIsLoading(false);
       } catch (err) {
         console.log(err.message);
@@ -57,10 +55,10 @@ const Content = () => {
             <ul 
             className=" ml-8 mr-8 mb-8  gap-4 block sm:grid sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-4 ">
               {!banner
-                ? data.slice(0, 4).map((data) => {
+                ? allVideos.slice(0, 4).map((data) => {
                     return <Card key={data._id} data={data} />;
                   })
-                : data.map((data) => {
+                : allVideos.map((data) => {
                     return <Card key={data._id} data={data} />;
                   })}
             </ul>
