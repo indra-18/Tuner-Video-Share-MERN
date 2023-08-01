@@ -5,32 +5,42 @@ import userIcon from "../../assets/userIcon.jpg";
 import { getById } from "../../services/nodeApi";
 import Loader from "../Loader";
 import { VideoContext } from "../../contextApi/VideoContextApi";
+import axios from "axios";
 
 const List = ({ handleSelectedVideo }) => {
-  const { updatedList } = useContext(VideoContext)
-  const [allVideos, setAllVideos] = useState([]);
+  const { updatedList, handleFetchedUserVideos, fetchedUserVideos } = useContext(VideoContext);
+  const [userVideos, setUserVideos] = useState([]);
   const [showRecent, setShowRecent] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [auth] = useAuth();
 
   useEffect(() => {
-    const myVideos = auth.user.myVideos;
+    setIsLoading(true);
+    const fetchUserVideos = async (userId) => {
+      const myVideos = await axios.get(`${import.meta.env.VITE_NODE_API}api/v1/auth/userVideos/${userId}`);
+      setUserVideos(myVideos.data.userVideos);
+    };
+    fetchUserVideos(auth.user._id);
+  }, [updatedList]);
+
+  useEffect(() => {
     const fetchVideos = async () => {
-      setIsLoading(true);
-      const updatedAllVideos = await Promise.all(
-        myVideos.map(async (id) => {
+      const updatedfetchedVideos = await Promise.all(
+        userVideos.map(async (id) => {
           const video = await getById(id);
           return video;
         })
       );
-      if (updatedAllVideos[0] === null) {
-        updatedAllVideos.shift();
+      if (updatedfetchedVideos[0] === null) {
+        updatedfetchedVideos.shift();
       }
-      setAllVideos(updatedAllVideos);
+      handleFetchedUserVideos(updatedfetchedVideos);
       setIsLoading(false);
     };
-    fetchVideos();
-  }, [updatedList]);
+    if (userVideos.length > 0) {
+      fetchVideos();
+    }
+  }, [userVideos]);
 
   return (
     <div className="w-1/2 bg-[#0F121FF5] max-sm:w-full">
@@ -64,12 +74,12 @@ const List = ({ handleSelectedVideo }) => {
       {!isLoading ? (
         !showRecent ? null : (
           <ul className="sm:grid sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-4">
-            {allVideos.map((card) => (
+            {fetchedUserVideos.map((card) => (
               <li
                 key={card._id}
                 className="flex items-center max-sm:mb-3"
                 onClick={() => {
-                  handleSelectedVideo(card._id);
+                  handleSelectedVideo(card);
                 }}
               >
                 <div className="relative w-5/6 ml-6 h-auto">

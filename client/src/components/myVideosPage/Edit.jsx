@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getById, updateVideo, deleteVideo } from "../../services/nodeApi";
+import { updateVideo, deleteVideo } from "../../services/nodeApi";
 import { options } from "../../constants";
 import { useAuth } from "../../contextApi/appContext";
 import { toast } from "react-toastify";
@@ -7,22 +7,12 @@ import { VideoContext } from "../../contextApi/VideoContextApi";
 
 const Edit = ({ selectedVideo, handleSelectedVideo }) => {
 
-const { handleUpdatedList } = useContext(VideoContext)
+  const { handleUpdatedList, fetchedUserVideos } = useContext(VideoContext)
   
-const [isMobile, setIsMobile] = useState(false)
- 
-const handleResize = () => {
-  if (window.innerWidth < 640) {
-      setIsMobile(true)
-  } else {
-      setIsMobile(false)
-  }
-}
   const [openDropdown, setOpenDropdown] = useState({});
-  const [video, setVideo] = useState({});
   const [auth] = useAuth();
   const userId = auth.user._id;
-  const videoId = selectedVideo || auth.user.myVideos[0];
+  const video = selectedVideo || fetchedUserVideos[0];
 
   const successMessage = (message) => toast.success(message);
   const errorMessage = (message) => toast.error(message);
@@ -64,22 +54,20 @@ const handleResize = () => {
     toggleDropdown(option);
   };
 
-  const getVideo = async (videoId) => {
-    if (!videoId || !userId) {
-      return <p className="text-center font-extrabold text-4xl">User has no videos to edit</p>
+  const getVideo = async (video) => {
+    if (!video || !userId) {
+      return <p className="text-center font-extrabold text-4xl">Please Upload videos to edit</p>
     }
     try {
-      const result = await getById(videoId);
-      setVideo(result);
       setFormData({
-        title: result.title,
-        description: result.description,
-        category: result.category,
-        visibility: result.visibility,
+        title: video.title,
+        description: video.description,
+        category: video.category,
+        visibility: video.visibility,
       });
       setDropdownValues({
-        Category: result.category,
-        Visibility: result.visibility,
+        Category: video.category,
+        Visibility: video.visibility,
       });
     } catch (err) {
       errorMessage(err.message);
@@ -87,9 +75,8 @@ const handleResize = () => {
   };
 
   useEffect(() => {
-    getVideo(videoId);
-    window.addEventListener("resize", handleResize)
-  }, [videoId, userId, selectedVideo, auth.user.myVideos.length]);
+    getVideo(video);
+  }, [video, userId, selectedVideo, fetchedUserVideos.length]);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -99,25 +86,19 @@ const handleResize = () => {
     videoData.append("description", formData.description);
     videoData.append("visibility", formData.visibility);
     try {
-      const result = await updateVideo(userId, videoId, formData);
+      const result = await updateVideo(userId, video._id, formData);
       successMessage(result);
       handleUpdatedList();
     } catch (error) {
       errorMessage(error.message);
     }
   };
-
   const handleDeleteButton = async () => {
     try {
-      const result = await deleteVideo(userId, videoId);
+      console.log('handle delte')
+      const result = await deleteVideo(userId, video._id);
       handleUpdatedList();
-      const videoIndex = auth.user.myVideos.indexOf(videoId);
-      if (videoIndex !== -1) {
-        auth.user.myVideos.splice(videoIndex, 1);
-      }
-      const newVideoId = auth.user.myVideos[0];
-      handleSelectedVideo(newVideoId);
-      getVideo(newVideoId);
+      handleSelectedVideo(fetchedUserVideos[1]);
       successMessage(result);
     } catch (err) {
       errorMessage(err.message);
@@ -127,8 +108,8 @@ const handleResize = () => {
 
   return (
     <div className=" max-sm:w-full w-1/2 bg-[#0F121FF5]">
-      {!videoId || !userId ? (
-        <p className="text-center font-extrabold text-4xl">User has no videos to edit</p>
+      {!video || !userId ? (
+        <p className="text-center text-indigo-400 font-extrabold text-4xl">Please Upload Videos</p>
       ) : (
         <div>
           <div className=" min-w-full aspect-w-16 h-44">
