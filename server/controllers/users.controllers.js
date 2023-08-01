@@ -34,7 +34,7 @@ const registerController = async (req, res) => {
     if (exisitingUser) {
       return res.status(200).send({
         success: false,
-        message: "Already Register please login",
+        message: "Email already registered",
       });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -116,7 +116,19 @@ const loginController = async (req, res) => {
   }
 };
 
+const getUserVideos = async(req, res) => {
+  const userId = req.params.userId;
+  try {
+    const user = await userModel.findById(userId);
+    userVideos = user.myVideos;
+    res.status(200).send({userVideos})
+  } catch (error) {
+    res.status(404).send({message: 'error occured'})
+  }
+}
+
 module.exports = {
   registerController,
-  loginController
+  loginController,
+  getUserVideos
 }
