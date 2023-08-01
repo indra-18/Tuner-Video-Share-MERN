@@ -7,8 +7,13 @@ const VideoContextProvider = ({children}) => {
     const [showUpload, setShowUpload] = useState(false);
     const [allVideos, setAllVideos] = useState([])
     const [updatedList, setUpdatedList] = useState(0);
+    const [fetchedUserVideos, setFetchedUserVideos] = useState([]);
 
     return <VideoContext.Provider value={{
+        fetchedUserVideos,
+        handleFetchedUserVideos: (videos) => {
+            setFetchedUserVideos(videos);
+        },
         updatedList,
         handleUpdatedList : () => {
             setUpdatedList(prev => prev+1)
