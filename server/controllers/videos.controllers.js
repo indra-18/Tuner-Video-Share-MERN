@@ -22,6 +22,13 @@ function getDate() {
   return formattedDate
 }
 
+const getDuration = (duration) => {
+  if (duration < 60) return `${duration} sec`;
+  const min = Math.floor(duration / 60);
+  const sec = Math.floor(duration % 60);
+  return `${min}:${sec} min`
+}
+
 exports.upload = async (req, res) => {
   const { userId } = req.params;
   const formattedDate = getDate()
@@ -35,14 +42,21 @@ exports.upload = async (req, res) => {
     }
     const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path, {
       resource_type: "video",
-      folder: "tuner"
+      folder: "tuner",
+      eager: [{ format: 'mp4', effect: 'preview:duration_2' }],
+      eager_async: true,
+      filename_override: req.body.title
     });
-
+    console.log(cloudinaryResponse)
+    const formattedDuration = getDuration(cloudinaryResponse.duration)
     const newVideo = new VideoModel({
       ...req.body,
-      video: cloudinaryResponse.url,
+      video: cloudinaryResponse.secure_url,
+      thumbnail: cloudinaryResponse.eager[0].secure_url,
       date: formattedDate,
+      duration: formattedDuration,
     })
+    console.log(newVideo)
     const savedVideo = await newVideo.save();
     user.myVideos.unshift(savedVideo._id)
     await user.save();

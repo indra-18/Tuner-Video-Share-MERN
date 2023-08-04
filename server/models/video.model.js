@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-// const USER = require('./user.model')
 const { ObjectId } = mongoose.Schema.Types
 const VideoSchema = new mongoose.Schema({
     title: {
@@ -10,12 +9,16 @@ const VideoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    thumbnail: {
+        type: String,
+        required: true
+    },
     date: {
         type: String,
         required: true
     },
     duration: {
-        type: Number,
+        type: String,
         required: true
     },
     views: {
