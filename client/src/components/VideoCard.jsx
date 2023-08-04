@@ -27,7 +27,7 @@ const VideoCard = ( { card } ) => {
           <video 
           ref={videoRef}
           className=" w-full h-full object-cover rounded hover:border-[#C4B4F8] hover:border-4">
-            <source src={card.thumbnail} type="video/mp4" />
+            <source src={card.thumbnail??card.video} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <img
