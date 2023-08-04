@@ -45,7 +45,8 @@ exports.upload = async (req, res) => {
       folder: "tuner",
       eager: [{ format: 'mp4', effect: 'preview:duration_2' }],
       eager_async: true,
-      filename_override: req.body.title
+      filename_override: req.body.title,
+      quality: 60
     });
     console.log(cloudinaryResponse)
     const formattedDuration = getDuration(cloudinaryResponse.duration)
