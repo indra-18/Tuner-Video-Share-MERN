@@ -43,7 +43,7 @@ exports.upload = async (req, res) => {
     const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path, {
       resource_type: "video",
       folder: "tuner",
-      eager: [{ format: 'mp4', effect: 'preview:duration_2' }],
+      eager: [{ format: 'jpeg', effect: 'preview:duration_2' }],
       eager_async: true,
       filename_override: req.body.title,
       quality: 60
