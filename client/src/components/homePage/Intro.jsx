@@ -4,8 +4,7 @@ import { getAllVideos } from "../../services/nodeApi";
 import { VideoContext } from "../../contextApi/VideoContextApi";
 import Loader from "../Loader";
 import HomeCarousel from "./HomeCarousel";
-import VideoCard from "../VideoCard";
-import { Link } from "react-router-dom";
+import Pagination from "../Pagination";
 
 const Content = () => {
   const [banner, setBanner] = useState("");
@@ -41,14 +40,6 @@ const Content = () => {
     }
   };
 
-  const getCard = (card) => (
-    <li key={card._id} className="flex items-center">
-      <Link to={`/home/video/${card._id}`}>
-        <VideoCard card={card} />
-      </Link>
-    </li>
-  )
-
   return (
     <>
       <HomeCarousel />
@@ -61,16 +52,11 @@ const Content = () => {
             </div>
           </div>
           <div className="videos">
-            <ul 
-            className=" ml-8 mr-8 mb-8  gap-4 block sm:grid sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-4 ">
-              {!banner
-                ? allVideos.slice(0, 4).map((card) => {
-                    return getCard(card);
-                  })
-                : allVideos.map((card) => {
-                    return getCard(card);
-                  })}
-            </ul>
+            {
+              !banner ? 
+              <Pagination videos={allVideos.slice(0, 4)} source={'home'} videosPerLoad={12} /> :
+              <Pagination videos={allVideos} source={'home'} videosPerLoad={12}/>
+            }
           </div>
         </div>
       ) : <Loader />}
