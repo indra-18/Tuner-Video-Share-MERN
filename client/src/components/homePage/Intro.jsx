@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import Card from "./card";
 import "./Intro.css";
 import { getAllVideos } from "../../services/nodeApi";
 import { VideoContext } from "../../contextApi/VideoContextApi";
 import Loader from "../Loader";
 import HomeCarousel from "./HomeCarousel";
+import Pagination from "../Pagination";
 
 const Content = () => {
   const [banner, setBanner] = useState("");
@@ -52,16 +52,11 @@ const Content = () => {
             </div>
           </div>
           <div className="videos">
-            <ul 
-            className=" ml-8 mr-8 mb-8  gap-4 block sm:grid sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-4 ">
-              {!banner
-                ? allVideos.slice(0, 4).map((data) => {
-                    return <Card key={data._id} data={data} />;
-                  })
-                : allVideos.map((data) => {
-                    return <Card key={data._id} data={data} />;
-                  })}
-            </ul>
+            {
+              !banner ? 
+              <Pagination videos={allVideos.slice(0, 4)} source={'home'} videosPerLoad={12} /> :
+              <Pagination videos={allVideos} source={'home'} videosPerLoad={12}/>
+            }
           </div>
         </div>
       ) : <Loader />}

@@ -62,7 +62,7 @@ const Upload = () => {
       description: "",
       category: "",
       visibility: "",
-      duration: 10,
+      duration: "",
       views: 200,
     });
     setPreview(null);
