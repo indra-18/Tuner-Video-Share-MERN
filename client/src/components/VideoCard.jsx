@@ -1,22 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import userIcon from '../assets/userIcon.jpg';
 import playIcon from '../assets/playIcon.png';
 
 const VideoCard = ( { card } ) => {
-  const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef();
 
   const isMouseEntered = () => {
-    setIsHovered(true)};
-    if (videoRef.current) {
+    if (videoRef.current && videoRef.current.paused) {
       videoRef.current.play();
     }
+  };
+  
   const isMouseLeft = () => {
-    setIsHovered(false);
     if (videoRef.current) {
       videoRef.current.pause();
     }
-  }
+  };
 
   return (
       <div className="relative w-full h-auto max-md:flex"
@@ -25,9 +24,14 @@ const VideoCard = ( { card } ) => {
       >
         <div className="relative">
           <video 
+          muted
+          playsInline
+          loop
+          preload="none"
           ref={videoRef}
+          poster={card.thumbnail}
           className=" w-full h-full object-cover rounded hover:border-[#C4B4F8] hover:border-4">
-            <source src={card.thumbnail??card.video} type="video/mp4" />
+            <source src={card.video} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <img
