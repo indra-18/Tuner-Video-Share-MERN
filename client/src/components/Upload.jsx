@@ -93,7 +93,12 @@ const Upload = () => {
     
     try {
       const response = await postVideo(userId, videoData, handleProgress);
-      successMessage("Video Saved Successfully");
+      console.log(response.status);
+      if (response.status !== 201 || response.status !== 200) {
+        errorMessage('Video file must be less than 20MB')
+      } else {
+        successMessage("Video Saved Successfully");
+      }
       setIsUploading(false)
       handleUpdatedList()
       resetForm()
