@@ -185,6 +185,8 @@ const Upload = () => {
                     <p className="mt-2 tracking-wide text-gray-300">
                       or browse to choose a file
                     </p>
+                    <p className=" text-sm text-red-500 animate-pulse
+                    ">*File must be less than 50 MB</p>
                   </>
                 )}
                 <input
