@@ -25,7 +25,7 @@ function getDate() {
 const getDuration = (duration) => {
   if (duration < 60) return `${duration} sec`;
   const min = Math.floor(duration / 60);
-  const sec = parseInt(duration % 60);
+  const sec = Math.floor(duration % 60);
   return `${min}:${sec} min`
 }
 
